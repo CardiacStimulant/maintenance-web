@@ -1,0 +1,75 @@
+//按钮背景色 包括行内按钮
+@t-btn-bgcolor: #E14C46;
+@t-btn-bgcolor-hover: #e60012;
+/** 
+ * private-layout-style-button  p-l-s-b 防止和其他className冲突
+ */
+.p-l-s-b {
+    padding: 0;
+    border: 0;
+    height: 32px;
+    outline:none;
+    cursor: pointer;
+    font-weight: 500;
+    border-radius: 4px;
+    background-color: transparent;
+}
+.p-l-s-b[disabled] {
+    opacity: .65;
+    cursor: not-allowed;
+}
+// 背景色按钮公共样式
+.p-l-s-b-g,
+.p-l-s-b-c,
+.p-l-s-b-g-g {
+    line-height: 32px;
+    padding: 0 22px;
+}
+.p-l-s-b-a,
+.p-l-s-b-g-c {
+    background-color: white;
+    line-height: 30px;
+    padding: 0 21px;
+}
+// 默认背景色，可带文字
+.p-l-s-b-g {
+    background-color: @t-btn-bgcolor;
+    color: white;
+}
+// 清除所有样式，单纯文字
+.p-l-s-b-c {
+    color: #007ACE
+}
+// 灰色背景，可带文字
+.p-l-s-b-g-g {
+    background-color: #E4E4E4;
+    color: #555555;
+}
+// 白色背景，红色边框(新增按钮)，可带文字
+.p-l-s-b-a {
+    color: @t-btn-bgcolor;
+    border: 1px solid @t-btn-bgcolor;
+}
+// 白色背景，灰色边框(取消按钮)，可带文字
+.p-l-s-b-g-c {
+    color: black;
+    border: 1px solid #e0e0e0;
+}
+
+/** 
+ * 按钮移入效果
+ */
+.p-l-s-b-a:hover,
+.p-l-s-b-g:hover {
+    background-color: @t-btn-bgcolor-hover;
+}
+.p-l-s-b-a:hover {
+    color: white;
+}
+.p-l-s-b-g-g:hover {
+    background-color: #bdbdbd;
+    border-color: #bdbdbd;
+}
+.p-l-s-b-g-c:hover {
+    background-color: #eeeeee;
+}
