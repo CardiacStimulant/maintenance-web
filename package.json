@@ -45,8 +45,10 @@
     "webpack-hot-middleware": "^2.21.0"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.2.1",
     "ac-qrcodes": "0.0.2",
     "ac-upload": "0.1.1",
+    "antd": "^4.4.2",
     "axios": "^0.18.0",
     "bee-autocomplete": "^1.0.4",
     "bee-checkbox": "1.1.1",
@@ -63,6 +65,7 @@
     "braft-editor": "^1.9.7",
     "classnames": "^2.2.5",
     "core-js": "^2.5.7",
+    "dva": "^2.4.1",
     "echarts": "^4.1.0",
     "echarts-for-react": "^2.0.13",
     "jquery": "^3.3.1",

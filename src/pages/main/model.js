@@ -10,7 +10,7 @@ import $ from "jquery";
 
 export default {
     // 确定 Store 中的数据模型作用域
-    name: "Login",
+    name: "Maintenance",
     // 设置当前 Model 所需的初始化 state
     initialState: {
         
@@ -29,6 +29,26 @@ export default {
         }
     },
     effects: {
-        
+        /**
+        * 获取通话信息& 服务总结  by xingzhc 
+        * @param {*} param
+        * @param {*} getState
+        */
+        async getServiceRecordHistoryCall(param, getState) {
+            let { data: { detailMsg: { data } } } = await api.getServiceRecordCall(param);
+            return data;
+        },
+
+        /**
+         * 获取通话信息
+         * @param {*} param
+         * @param {*} getState
+         */
+        async getServiceRecordCall(param, getState) {
+            let res = processData(await api.getServiceRecordCall(param));
+            actions.PhoneService.updateState({
+                serviceRecordCall: res
+            })
+        },
     },
 };
