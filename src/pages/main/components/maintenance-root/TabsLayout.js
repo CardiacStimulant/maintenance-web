@@ -2,9 +2,7 @@ import './styles/tabs.less';
 import React from 'react';
 import { DownOutlined } from '@ant-design/icons';
 import { Layout, Tabs, Dropdown, Button, Menu } from 'antd';
-import { router } from 'dva';
 import NotFound from 'components/Pages/404';
-const { Switch, Route, withRouter } = router;
 const { Content } = Layout;
 const TabPane = Tabs.TabPane;
 
@@ -13,7 +11,6 @@ function getTitle(pathName) {
   return <div className="tab-title">{map ? map.title : 'Tag'}</div>;
 }
 
-// @withRouter
 export default class TabsLayout extends React.PureComponent {
   constructor(props) {
     const {
@@ -33,7 +30,7 @@ export default class TabsLayout extends React.PureComponent {
   }
 
   setCurPanes = (pathName, _panes) => {
-    const { childRoutes } = this.props;
+    const { theme, childRoutes } = this.props;
     let panes = _panes || this.state.panes;
     const existPane = panes.some(item => item.key === pathName);
     if (existPane) {
@@ -64,7 +61,7 @@ export default class TabsLayout extends React.PureComponent {
         return {
           activeKey: pathName,
           panes: panes,
-          noMatch: true
+          noMatch: theme && theme.layout && theme.layout.indexOf('tabLayout') >= 0 ? false : true,
         };
       }
     }
@@ -124,10 +121,8 @@ export default class TabsLayout extends React.PureComponent {
     return (
       <Layout className="full-layout tabs-layout">
         <Content>
-          {/* <Switch> */}
             {noMatch ? (
-              // <Route component={NotFound} />
-              ""
+              <NotFound />
             ) : (
               <Tabs
                 hideAdd
@@ -160,7 +155,6 @@ export default class TabsLayout extends React.PureComponent {
                 ))}
               </Tabs>
             )}
-          {/* </Switch> */}
         </Content>
       </Layout>
     );

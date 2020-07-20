@@ -173,9 +173,7 @@ class LeftSideBar extends PureComponent {
     });
 
     const { openKeys } = this.state;
-    // if pathname can't match, use the nearest parent's key
     let selectedKeys = this.getSelectedMenuKeys();
-    // Don't show popup menu when it is been collapsed
     const menuProps = collapsed
       ? {
           selectedKeys

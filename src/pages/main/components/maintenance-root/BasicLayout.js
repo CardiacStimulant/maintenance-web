@@ -214,7 +214,7 @@ export default class BasicLayout extends React.PureComponent {
           />
           <Content>
             {theme.layout.indexOf('tabLayout') >= 0 ? (
-              <TabsLayout childRoutes={[]} location={location} />
+              <TabsLayout childRoutes={[]} location={location} theme={theme} />
             ) : (
               <Layout className="full-layout">
                 {/* <Header>

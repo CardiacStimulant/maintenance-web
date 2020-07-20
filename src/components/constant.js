@@ -1,18 +1,18 @@
 // 主页面菜单标签
 export const menu = [
+    // {
+    //   name: '仪表盘',
+    //   icon: 'DashboardOutlined',
+    //   path: '/dashboard',
+    // },
     {
-      name: '仪表盘',
-      icon: 'DashboardOutlined',
-      path: '/dashboard',
-    },
-    {
-      name: '组件',
-      icon: 'DesktopOutlined',
+      name: '系统管理',
+      icon: 'UserOutlined',
       path: '/component',
       children: [
         {
-          name: '工具条',
-          path: '/toolbar',
+          name: '用户管理',
+          path: 'http://127.0.0.1:3000/fe/user#/',
         },
         {
           name: 'BaseComponent',
