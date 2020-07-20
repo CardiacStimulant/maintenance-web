@@ -2,7 +2,7 @@ import React from 'react';
 import mirror, { connect } from 'mirrorx';
 
 // 组件引入
-import MaintenanceRoot from './components/maintenance-root';
+import MaintenanceRoot from './components/maintenance-root/BasicLayout';
 
 // 数据模型引入
 import model from './model'

@@ -129,7 +129,12 @@ const rules = [{
   test: /\.less$/,
   exclude: /(node_modules)/,
   use: ExtractTextPlugin.extract({
-    use: ['css-loader', 'postcss-loader', 'less-loader'],
+    use: ['css-loader', 'postcss-loader', {
+      loader: "less-loader",
+      options: {
+        javascriptEnabled: true
+      }
+    }],
     fallback: 'style-loader'
   })
 },{

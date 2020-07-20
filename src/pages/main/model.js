@@ -13,7 +13,8 @@ export default {
     name: "Maintenance",
     // 设置当前 Model 所需的初始化 state
     initialState: {
-        
+        menu: [],
+        flatMenu: [],
     },
     reducers: {
         /**
@@ -29,26 +30,51 @@ export default {
         }
     },
     effects: {
-        /**
-        * 获取通话信息& 服务总结  by xingzhc 
-        * @param {*} param
-        * @param {*} getState
-        */
-        async getServiceRecordHistoryCall(param, getState) {
-            let { data: { detailMsg: { data } } } = await api.getServiceRecordCall(param);
-            return data;
-        },
-
-        /**
-         * 获取通话信息
-         * @param {*} param
-         * @param {*} getState
-         */
-        async getServiceRecordCall(param, getState) {
-            let res = processData(await api.getServiceRecordCall(param));
-            actions.PhoneService.updateState({
-                serviceRecordCall: res
-            })
-        },
+        *getMenu({ payload }, { call, put }) {
+            const { status, data } = yield call(getMenu, payload);
+            if (status) {
+              const loopMenu = (menu, pitem = {}) => {
+                menu.forEach(item => {
+                  if (pitem.path) {
+                    item.parentPath = pitem.parentPath ? pitem.parentPath.concat(pitem.path) : [pitem.path];
+                  }
+                  if (item.children && item.children.length) {
+                    loopMenu(item.children, item);
+                  }
+                });
+              }
+              loopMenu(data);
+              
+              yield put({
+                type: 'getMenuSuccess',
+                payload: data,
+              });
+            }
+          },
     },
+
+    reducers: {
+        getMenuSuccess(state, { payload }) {
+          return {
+            ...state,
+            menu: payload,
+            flatMenu: getFlatMenu(payload),
+          };
+        }
+      },
 };
+
+export function getFlatMenu(menus) {
+    let menu = [];
+    menus.forEach(item => {
+      if (item.children) {
+        menu = menu.concat(getFlatMenu(item.children));
+      }
+      menu.push(item);
+    });
+    return menu;
+  }
+  
+  export async function getMenu(payload) {
+    return $$.post('/user/menu', payload);
+  }
