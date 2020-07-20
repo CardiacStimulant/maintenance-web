@@ -85,11 +85,11 @@ class NavBar extends PureComponent {
     return (
       <header className={classnames}>
         <div className="navbar-branding">
-          {/* <Link className="navbar-brand" to="/"> */}
+          <div className="navbar-brand">
             <img src={logoImg} alt="logo" />
             <b>LANIF</b>
             Admin
-          {/* </Link> */}
+          </div>
           <span className="toggle_sidemenu_l" onClick={onCollapseLeftSide}>
             <Icon type="lines" />
           </span>
@@ -186,9 +186,9 @@ const UserDropDown = props => (
       </a>
     </li>
     <li className="list-group-item dropdown-footer">
-      {/* <Link to="/sign/login"> */}
+      <a href="">
         <Icon type="poweroff" /> 退出
-      {/* </Link> */}
+      </a>
     </li>
   </ul>
 );

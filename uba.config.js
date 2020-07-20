@@ -123,8 +123,8 @@ const rules = [{
   exclude: /(node_modules)/,
   include: path.resolve('src'),
   use: [{
-    loader: 'babel-loader'
-  }]
+    loader: 'babel-loader',
+  }],
 },{
   test: /\.less$/,
   exclude: /(node_modules)/,

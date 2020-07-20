@@ -1,25 +1,14 @@
-/**
- * 来源
- * https://github.com/ant-design/ant-design-pro/blob/master/src/components/SiderMenu/SiderMenu.js
- */
 import React, { PureComponent } from 'react';
 import cx from 'classnames';
-import { Menu, Layout, Switch, Select, Drawer } from 'antd';
-import { router } from 'dva';
+import { Menu, Layout, Switch, Select, } from 'antd';
 import pathToRegexp from 'path-to-regexp';
 import Icon from '../Icon';
 import isEqual from 'react-fast-compare';
-import logoImg from '../../static/fe/static/assets/images/logo.png';
 import './style/index.less';
-const { Link } = router;
 const Option = Select.Option;
 const { Sider } = Layout;
 const SubMenu = Menu.SubMenu;
 
-// Allow menu.js config icon as string or ReactNode
-//   icon: 'setting',
-//   icon: 'http://demo.com/icon.png',
-//   icon: <Icon type="setting" />,
 const getIcon = icon => {
   if (typeof icon === 'string' && icon.indexOf('http') === 0) {
     return <img src={icon} alt="icon" className={`sider-menu-item-img`} />;
@@ -62,15 +51,10 @@ class LeftSideBar extends PureComponent {
     }
   }
 
-  /**
-   * 判断是否是http链接.返回 Link 或 a
-   * Judge whether it is http link.return a or Link
-   * @memberof SiderMenu
-   */
   getMenuItemPath = item => {
     const itemPath = this.conversionPath(item.path);
     const icon = getIcon(item.icon);
-    const { isMobile, onCollapse } = this.props;
+    const { onCollapse } = this.props;
     const { target, name } = item;
     // Is it a http link
     if (/^https?:\/\//.test(itemPath)) {
@@ -82,21 +66,15 @@ class LeftSideBar extends PureComponent {
       );
     }
     return (
-      <Link
-        to={itemPath}
-        target={target}
-        replace={itemPath === this.props.location.pathname}
-        onClick={isMobile ? onCollapse : () => {}}
+      <a
+        href={""}
       >
         {icon}
         <span>{name}</span>
-      </Link>
+      </a>
     );
   };
 
-  /**
-   * get SubMenu or Item
-   */
   getSubMenuOrItem = item => {
     if (item.children && item.children.some(child => child.name)) {
       const childrenItems = this.getNavMenuItems(item.children);
@@ -126,6 +104,7 @@ class LeftSideBar extends PureComponent {
       );
     }
   };
+
   /**
    * 获得菜单子节点
    */
@@ -142,7 +121,6 @@ class LeftSideBar extends PureComponent {
       .filter(item => item);
   };
 
-  // conversion Path
   // 转化路径
   conversionPath = path => {
     if (path && path.indexOf('http') === 0) {
@@ -152,7 +130,6 @@ class LeftSideBar extends PureComponent {
     }
   };
 
-  // Get the currently selected menu
   getSelectedMenuKeys = () => {
     const pathname = this.props.location.pathname;
     const selectMenu = getMeunMatchKeys(this.props.flatMenu, pathname)[0];
@@ -185,7 +162,6 @@ class LeftSideBar extends PureComponent {
       showHeader,
       menu,
       user,
-      isMobile
     } = this.props;
 
     const classnames = cx('sidebar-left', 'sidebar-default', {
@@ -215,8 +191,8 @@ class LeftSideBar extends PureComponent {
         width={230}
         collapsedWidth={leftCollapsedWidth + 0.1}
         collapsible
-        collapsed={isMobile ? false : collapsed}
-        onCollapse={isMobile ? null : onCollapse}
+        collapsed={collapsed}
+        onCollapse={onCollapse}
         breakpoint="lg"
         trigger={null}
       >
@@ -263,7 +239,7 @@ class LeftSideBar extends PureComponent {
             {this.getNavMenuItems(menu)}
           </Menu>
           <div className="sidebar-toggle-mini">
-            {collapsed && leftCollapsedWidth !== 0 && !isMobile ? (
+            {collapsed && leftCollapsedWidth !== 0 ? (
               <Switch
                 checked={collapsed}
                 onChange={onCollapseAll}
@@ -275,30 +251,7 @@ class LeftSideBar extends PureComponent {
       </Sider>
     );
 
-    return isMobile ? (
-      <Drawer
-        className="left-sidebar-drawer"
-        visible={!collapsed}
-        placement="left"
-        onClose={onCollapse}
-        width={230}
-        closable={false}
-      >
-        <div className="navbar-branding">
-          <div className="navbar-brand">
-            <img src={logoImg} alt="logo" />
-            <b>LANIF</b>
-            Admin
-          </div>
-          <span className="toggle_sidemenu_l" onClick={onCollapse}>
-            <Icon type="lines" />
-          </span>
-        </div>
-        {siderBar}
-      </Drawer>
-    ) : (
-      siderBar
-    );
+    return siderBar;
   }
 }
 

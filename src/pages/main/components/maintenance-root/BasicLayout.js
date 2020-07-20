@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect, router, routerRedux } from 'dva';
 import { Layout } from 'antd';
 import NavBar from 'components/NavBar';
 import { LeftSideBar, RightSideBar } from 'components/SideBar';
@@ -11,9 +10,10 @@ import $$ from 'cmn-utils';
 import cx from 'classnames';
 import isEqual from 'react-fast-compare';
 import { SwitchTransition, CSSTransition } from 'react-transition-group';
+import {menu} from "components/constant";
 import './styles/transition.less';
 import './styles/basic.less';
-const { Switch } = router;
+
 const { Content, Header } = Layout;
 
 /**
@@ -35,8 +35,6 @@ export default class BasicLayout extends React.PureComponent {
         'fixedHeader',
         'fixedSidebar',
         'fixedBreadcrumbs'
-        // 'hidedBreadcrumbs',
-        // 'tabLayout',
       ];
     }
     this.state = {
@@ -83,8 +81,7 @@ export default class BasicLayout extends React.PureComponent {
       location: { pathname },
       flatMenu
     } = props || this.props;
-    const menu = this.getMeunMatchKeys(flatMenu, pathname)[0];
-    return menu;
+    return this.getMeunMatchKeys(flatMenu, pathname)[0];;
   }
 
   getMeunMatchKeys = (flatMenu, path) => {
@@ -177,7 +174,7 @@ export default class BasicLayout extends React.PureComponent {
       user,
       currentMenu,
     } = this.state;
-    const { routerData, location, menu, flatMenu } = this.props;
+    const { routerData, location, flatMenu } = this.props;
     // const { childRoutes } = routerData;
     const classnames = cx('basic-layout', 'full-layout', {
       fixed: theme.layout && theme.layout.indexOf('fixedSidebar') !== -1,
@@ -201,7 +198,7 @@ export default class BasicLayout extends React.PureComponent {
             user={user}
           />
         </Header>
-        {/* <Layout>
+        <Layout>
           <LeftSideBar
             collapsed={collapsedLeftSide}
             leftCollapsedWidth={leftCollapsedWidth}
@@ -220,7 +217,7 @@ export default class BasicLayout extends React.PureComponent {
               <TabsLayout childRoutes={[]} location={location} />
             ) : (
               <Layout className="full-layout">
-                <Header>
+                {/* <Header>
                   <TopBar
                     expand={expandTopBar}
                     toggleRightSide={this.toggleRightSide}
@@ -230,7 +227,7 @@ export default class BasicLayout extends React.PureComponent {
                     location={location}
                     theme={theme}
                   />
-                </Header>
+                </Header> */}
                 <Content style={{ overflow: 'hidden' }}>
                   <SwitchTransition>
                     <CSSTransition
@@ -240,7 +237,7 @@ export default class BasicLayout extends React.PureComponent {
                     >
                       <Layout className="full-layout">
                         <Content className="router-page">
-                          <Switch location={location}>{[]}</Switch>
+                          <div location={location}>{[]}</div>
                         </Content>
                       </Layout>
                     </CSSTransition>
@@ -253,8 +250,8 @@ export default class BasicLayout extends React.PureComponent {
             collapsed={collapsedRightSide}
             onCollapse={this.toggleRightSide}
           />
-        </Layout> */}
-        {/* <SkinToolbox onChangeTheme={this.onChangeTheme} theme={theme} /> */}
+        </Layout>
+        <SkinToolbox onChangeTheme={this.onChangeTheme} theme={theme} />
       </Layout>
     );
   }

@@ -50,15 +50,17 @@ export default class TabsLayout extends React.PureComponent {
           panes: panes.concat(nextPanes),
           noMatch: false
         };
-      } else if (
-        window.dva_router_pathMap[pathName] &&
-        window.dva_router_pathMap[pathName].parentPath
-      ) {
-        // childRoutes中如果没有(分两种情况,确实没有,或可能是一个子路由在subChildRoute中)
-        // 如果是子路由
-        const parentPath = window.dva_router_pathMap[pathName].parentPath;
-        return this.setCurPanes(parentPath, panes);
-      } else {
+      } 
+      // else if (
+      //   window.dva_router_pathMap[pathName] &&
+      //   window.dva_router_pathMap[pathName].parentPath
+      // ) {
+      //   // childRoutes中如果没有(分两种情况,确实没有,或可能是一个子路由在subChildRoute中)
+      //   // 如果是子路由
+      //   const parentPath = window.dva_router_pathMap[pathName].parentPath;
+      //   return this.setCurPanes(parentPath, panes);
+      // } 
+      else {
         return {
           activeKey: pathName,
           panes: panes,
@@ -122,9 +124,10 @@ export default class TabsLayout extends React.PureComponent {
     return (
       <Layout className="full-layout tabs-layout">
         <Content>
-          <Switch>
+          {/* <Switch> */}
             {noMatch ? (
-              <Route component={NotFound} />
+              // <Route component={NotFound} />
+              ""
             ) : (
               <Tabs
                 hideAdd
@@ -157,7 +160,7 @@ export default class TabsLayout extends React.PureComponent {
                 ))}
               </Tabs>
             )}
-          </Switch>
+          {/* </Switch> */}
         </Content>
       </Layout>
     );

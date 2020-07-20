@@ -11,6 +11,7 @@ import MainLayout from "layout";
 import Routes from './routes'
 import 'static/trd/tineper-bee/assets/tinper-bee.css'
 import "src/app.less";
+import 'antd/dist/antd.css';
 
 
 
