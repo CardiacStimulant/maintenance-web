@@ -10,12 +10,10 @@ import $ from "jquery";
 
 export default {
     // 确定 Store 中的数据模型作用域
-    name: "Maintenance",
+    name: "UserManager",
     // 设置当前 Model 所需的初始化 state
     initialState: {
-        tabMenus: [],   // tab的所有menu
-        activeMenu: {}, // tab当前激活的menu
-        flatMenu: [],
+        
     },
     reducers: {
         /**
@@ -31,6 +29,6 @@ export default {
         }
     },
     effects: {
-
+        
     },
 };

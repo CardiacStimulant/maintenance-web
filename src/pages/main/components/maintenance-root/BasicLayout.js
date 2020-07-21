@@ -11,6 +11,7 @@ import cx from 'classnames';
 import isEqual from 'react-fast-compare';
 import { SwitchTransition, CSSTransition } from 'react-transition-group';
 import {menu} from "components/constant";
+import { actions } from "mirrorx";
 import './styles/transition.less';
 import './styles/basic.less';
 
@@ -163,6 +164,18 @@ export default class BasicLayout extends React.PureComponent {
     });
   };
 
+  // 添加tabMenus
+  addTabMenus = (item, _this) => {
+    const {tabMenus} = this.props;
+    if(tabMenus) {
+      tabMenus.push(item);
+    }
+    actions.Maintenance.updateState({
+      activeMenu: item,
+      tabMenus: tabMenus || [],
+    });
+  }
+
   render() {
     const {
       collapsedLeftSide,
@@ -174,7 +187,7 @@ export default class BasicLayout extends React.PureComponent {
       user,
       currentMenu,
     } = this.state;
-    const { routerData, location, flatMenu } = this.props;
+    const { routerData, location, flatMenu, activeMenu, tabMenus, } = this.props;
     // const { childRoutes } = routerData;
     const classnames = cx('basic-layout', 'full-layout', {
       fixed: theme.layout && theme.layout.indexOf('fixedSidebar') !== -1,
@@ -211,10 +224,11 @@ export default class BasicLayout extends React.PureComponent {
             currentMenu={currentMenu}
             menu={menu}
             user={user}
+            addTabMenus = {this.addTabMenus.bind()}
           />
           <Content>
             {theme.layout.indexOf('tabLayout') >= 0 ? (
-              <TabsLayout childRoutes={[]} location={location} theme={theme} />
+              <TabsLayout childRoutes={[]} location={location} theme={theme} tabMenus={tabMenus} activeMenu={activeMenu} />
             ) : (
               <Layout className="full-layout">
                 {/* <Header>

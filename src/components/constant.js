@@ -11,6 +11,8 @@ export const menu = [
       path: '/component',
       children: [
         {
+          key: "userManager",
+          componentName: "user",
           name: '用户管理',
           path: 'http://127.0.0.1:3000/fe/user#/',
         },
@@ -108,7 +110,7 @@ export const menu = [
       children: [
         {
           name: '登录页',
-          path: '/sign/login',
+          path: '/login',
         },
         {
           name: '注册页',

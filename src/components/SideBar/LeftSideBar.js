@@ -5,6 +5,7 @@ import pathToRegexp from 'path-to-regexp';
 import Icon from '../Icon';
 import isEqual from 'react-fast-compare';
 import './style/index.less';
+import { actions } from 'mirrorx';
 const Option = Select.Option;
 const { Sider } = Layout;
 const SubMenu = Menu.SubMenu;
@@ -52,23 +53,13 @@ class LeftSideBar extends PureComponent {
   }
 
   getMenuItemPath = item => {
+    const {addTabMenus} = this.props;
     const itemPath = this.conversionPath(item.path);
     const icon = getIcon(item.icon);
     const { onCollapse } = this.props;
     const { target, name } = item;
-    // Is it a http link
-    if (/^https?:\/\//.test(itemPath)) {
-      return (
-        <a href={itemPath} target={target}>
-          {icon}
-          <span>{name}</span>
-        </a>
-      );
-    }
     return (
-      <a
-        href={""}
-      >
+      <a onClick={addTabMenus ? addTabMenus.bind(this, item) : () => {}}>
         {icon}
         <span>{name}</span>
       </a>
@@ -126,7 +117,7 @@ class LeftSideBar extends PureComponent {
     if (path && path.indexOf('http') === 0) {
       return path;
     } else {
-      return `/${path || ''}`.replace(/\/+/g, '/').replace(/\/:\w+\??/, '');
+      return `/fe/${path || ''}`.replace(/\/+/g, '/').replace(/\/:\w+\??/, '');
     }
   };
 

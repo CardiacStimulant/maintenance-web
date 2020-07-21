@@ -3,41 +3,41 @@ import React from 'react';
 import { DownOutlined } from '@ant-design/icons';
 import { Layout, Tabs, Dropdown, Button, Menu } from 'antd';
 import NotFound from 'components/Pages/404';
+import {Router, Route, Link, actions} from 'mirrorx'
 const { Content } = Layout;
 const TabPane = Tabs.TabPane;
 
-function getTitle(pathName) {
-  const map = window.dva_router_pathMap[pathName];
-  return <div className="tab-title">{map ? map.title : 'Tag'}</div>;
-}
-
 export default class TabsLayout extends React.PureComponent {
   constructor(props) {
-    const {
-      location: { pathname }
-    } = props;
     super(props);
-    this.state = this.setCurPanes(pathname, []);
-  }
-  
-  componentDidUpdate(prevProps, prevState) {
-    const pathname = prevProps.location.pathname;
-    const nextpathname = this.props.location.pathname;
-    if (pathname !== nextpathname) {
-      const newState = this.setCurPanes(nextpathname);
-      this.setState(newState);
-    }
+    this.state = {
+      noMatch: false,
+    };
   }
 
+  componentDidMount() {
+    const { theme, } = this.props;
+    this.setState({
+      noMatch: theme && theme.layout && theme.layout.indexOf('tabLayout') >= 0 ? false : true,
+      activeKey: "",
+    });
+  }
+  
+  // componentDidUpdate(prevProps, prevState) {
+  //   const { tabMenus, activeMenu, } = this.props;
+  //   if (JSON.stringify(tabMenus) !== JSON.stringify(prevProps.tabMenus) || JSON.stringify(activeMenu) !== JSON.stringify(prevProps.activeMenu)) {
+
+  //   }
+  // }
+
   setCurPanes = (pathName, _panes) => {
-    const { theme, childRoutes } = this.props;
+    const { childRoutes } = this.props;
     let panes = _panes || this.state.panes;
     const existPane = panes.some(item => item.key === pathName);
     if (existPane) {
       return {
         activeKey: pathName,
         panes,
-        noMatch: false
       };
     } else {
       const nextPanes = childRoutes.filter(item => item.key === pathName);
@@ -45,7 +45,6 @@ export default class TabsLayout extends React.PureComponent {
         return {
           activeKey: pathName,
           panes: panes.concat(nextPanes),
-          noMatch: false
         };
       } 
       // else if (
@@ -61,30 +60,49 @@ export default class TabsLayout extends React.PureComponent {
         return {
           activeKey: pathName,
           panes: panes,
-          noMatch: theme && theme.layout && theme.layout.indexOf('tabLayout') >= 0 ? false : true,
         };
       }
     }
   };
 
+  // 选择tab事件
   onChange = activeKey => {
-    this.props.history.push(activeKey);
+    const {tabMenus} = this.props;
+    let activeMenu = {};
+    tabMenus.forEach((menu) => {
+      if (menu.key === activeKey) {
+        activeMenu = menu;
+      }
+    });
+    actions.Maintenance.updateState({
+      activeMenu: activeMenu,
+    });
+    return activeMenu;
   };
 
+  // 关闭tab事件
   onRemove = targetKey => {
-    let { activeKey, panes } = this.state;
-    let lastIndex;
-    panes.forEach((pane, i) => {
-      if (pane.key === targetKey) {
+    let { tabMenus, activeMenu, } = this.props;
+    let lastIndex, activeKey = activeMenu.key;
+    tabMenus.forEach((menu, i) => {
+      if (menu.key === targetKey) {
         lastIndex = i - 1;
       }
     });
-    const newpanes = panes.filter(pane => pane.key !== targetKey);
-    if (newpanes.length && activeKey === targetKey) {
-      activeKey = lastIndex >= 0 ? newpanes[lastIndex].key : newpanes[0].key;
+    const newTabMenus = tabMenus.filter(menu => menu.key !== targetKey);
+    if (newTabMenus.length) {
+      if(activeKey === targetKey) {
+        activeMenu = lastIndex >= 0 ? newTabMenus[lastIndex] : newTabMenus[0];
+      } else {
+        activeMenu = this.onChange(activeKey);
+      }
+    } else {
+      activeMenu = {};
     }
-    this.setState({ panes: newpanes, activeKey }, () => {
-      if (activeKey !== targetKey) this.onChange(activeKey);
+    
+    actions.Maintenance.updateState({
+      tabMenus: newTabMenus,
+      activeMenu: activeMenu,
     });
   };
 
@@ -117,6 +135,7 @@ export default class TabsLayout extends React.PureComponent {
 
   render() {
     const { panes, activeKey, noMatch } = this.state;
+    const { tabMenus, activeMenu, } = this.props;
 
     return (
       <Layout className="full-layout tabs-layout">
@@ -146,11 +165,14 @@ export default class TabsLayout extends React.PureComponent {
                 }
                 onEdit={this.onRemove}
                 onChange={this.onChange}
-                activeKey={activeKey}
+                activeKey={tabMenus && tabMenus.length>0 && activeMenu ? activeMenu.key : ""}
               >
-                {panes.map(item => (
-                  <TabPane tab={getTitle(item.key)} key={item.key}>
-                    {item}
+                {tabMenus.map(item => (
+                  <TabPane tab={<div className="tab-title">{item.name || 'tag'}</div>} key={item.key}>
+                    {/* <Link to={"/fe/" + item.componentName} /> */}
+                    <Link to={"user"} > link </Link>
+                    {/* <Link to={location => `${location.pathname}`} /> */}
+                    {/* <iframe name="iframe1" id="iframe1" src="http://127.0.0.1:3000/fe/user#/"></iframe> */}
                   </TabPane>
                 ))}
               </Tabs>

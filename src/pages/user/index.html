@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"
+  />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>用户管理</title>
+    <link rel="stylesheet" href="/fe/static/font/font_967314_egm8d5587aw.css"/>
+    <% for (var chunk in htmlWebpackPlugin.files.css) { %>
+    <link href="<%=htmlWebpackPlugin.files.css[chunk] %>" rel="stylesheet">
+    <% } %>
+</head>
+
+<body>
+  <div style="height: 100%; overflow: hidden;" id="app"></div>
+    <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
+      <script type="text/javascript" src="<%=htmlWebpackPlugin.files.chunks[chunk].entry %>"></script>
+    <% } %>
+</body>
+</html>
