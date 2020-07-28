@@ -65,19 +65,16 @@ const globalEnvConfig = new webpack.DefinePlugin({
   GROBAL_HTTP_CTX: JSON.stringify("/IS-server"),
   WORK_ORDER_GROBAL_HTTP_CTX: JSON.stringify("/ISC-wo"),
   IM_SERVER_GROBAL_HTTP_CTX: JSON.stringify("/im-service"),
-  PROJECT_DOMAIN_NAME: JSON.stringify("https://yycti-daily.yyuap.com"),
-  U8_DAILY_DOMAIN_NAME: JSON.stringify("https://u8cupc-daily.yyuap.com"),
 })
 
 //开发环境websocket_proxy_url
 const dev_websocket_proxy_url_config = new webpack.DefinePlugin({
+  GLOBAL_COMPONENTS_URL: JSON.stringify("http://127.0.0.1:3000"),
   websocket_proxy_url: JSON.stringify("wss://yycti-daily.yyuap.com:7443"), //wss://pay.yonyoutelecom.cn:5443
-  // websocket_proxy_realm: JSON.stringify("yycti-daily.yyuap.com")
 })
 //测试环境websocket_proxy_url
 const test_websocket_proxy_url_config = new webpack.DefinePlugin({
   websocket_proxy_url: JSON.stringify("wss://testfs.yonyoutelecom.cn:7443"), //wss://isctest.yonyoutelecom.cn:7443
-  // websocket_proxy_realm: JSON.stringify("testfs.yonyoutelecom.cn")
 })
 //demo演示环境websocket_proxy_url
 const demo_websocket_proxy_url_config = new webpack.DefinePlugin({

@@ -58,7 +58,7 @@ export default class SearchBar extends Component {
                     hasSearchButtons ? <Col lg={12} md={12} sm={12} xs={12} className="form-item-btn-box">
                         {
                             searchButtonsLeft&&searchButtonsLeft.map((item,i) => {
-                                let style = {}; // float:'left'
+                                let style = {float:'left'};
                                 if(i==0) style.marginLeft = 0;
                                 return (
                                     item.type ?

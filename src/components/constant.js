@@ -166,3 +166,6 @@ export const menu = [
       ],
     },
 ];
+
+// 列表页查询条件栅格默认分割
+export const attrs = {lg:3,md:6,sm:6,xs:12,};

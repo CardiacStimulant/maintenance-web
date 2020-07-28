@@ -13,7 +13,7 @@ export default {
     name: "UserManager",
     // 设置当前 Model 所需的初始化 state
     initialState: {
-        
+        userManagerPageObject: {},  // 用户管理分页信息
     },
     reducers: {
         /**
