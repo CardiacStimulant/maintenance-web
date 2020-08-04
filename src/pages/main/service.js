@@ -28,18 +28,18 @@ const URL = {
     //获取翻译信息
     "GET_TRANSLATE": `${GROBAL_HTTP_CTX}/service_record_translate/list`,
     //根据技能组查询客服
-    "QUERY_STAFF_LIST_BY_GROUP_ID": `${WORK_ORDER_GROBAL_HTTP_CTX}/staff/queryStaffListByGroupId`,
+    "QUERY_STAFF_LIST_BY_GROUP_ID": `${GROBAL_HTTP_CTX}/staff/queryStaffListByGroupId`,
     //工单模板自定义字段接口
-    "QUERY_PROPERTY_BY_SELECT_TEMPLATE_ID": `${WORK_ORDER_GROBAL_HTTP_CTX}/work_order_template_property/queryPropertyBySelectTemplateId`,
+    "QUERY_PROPERTY_BY_SELECT_TEMPLATE_ID": `${GROBAL_HTTP_CTX}/work_order_template_property/queryPropertyBySelectTemplateId`,
     //保存工单
-    "WORK_ORDER_ADD" : `${WORK_ORDER_GROBAL_HTTP_CTX}/work_order/saveEntity`,
-    "WORK_ORDER_TEMPLATE_ADD": `${WORK_ORDER_GROBAL_HTTP_CTX}/work_order_template/workOrderTemplateSave`,
+    "WORK_ORDER_ADD" : `${GROBAL_HTTP_CTX}/work_order/saveEntity`,
+    "WORK_ORDER_TEMPLATE_ADD": `${GROBAL_HTTP_CTX}/work_order_template/workOrderTemplateSave`,
     //工单--附件
-    "WORK_ORDER_MATERIAL_MULTIPLE_ADD": `${WORK_ORDER_GROBAL_HTTP_CTX}/work_order_material/saveEntityMultiple`,
+    "WORK_ORDER_MATERIAL_MULTIPLE_ADD": `${GROBAL_HTTP_CTX}/work_order_material/saveEntityMultiple`,
     //工单-关注人
-    "WORK_ORDER_FOLLOWER_MULTIPLE_ADD": `${WORK_ORDER_GROBAL_HTTP_CTX}/work_order_follower/saveEntityMultiple`,
+    "WORK_ORDER_FOLLOWER_MULTIPLE_ADD": `${GROBAL_HTTP_CTX}/work_order_follower/saveEntityMultiple`,
     //工单状态流转接口
-    "WORK_ORDER_STATUS_FLOW": `${WORK_ORDER_GROBAL_HTTP_CTX}/work_order_flow/status_flow`,
+    "WORK_ORDER_STATUS_FLOW": `${GROBAL_HTTP_CTX}/work_order_flow/status_flow`,
     //其他接口
     "QUERY_LAST_WORK_ORDER_BY_CUSTOMER_ID" : `${GROBAL_HTTP_CTX}/rpc/work_order/queryLastWorkOrderByCustomerId`,    //查询客户最近的工单记录
     "QUERY_LAST_GET_FREE_AGENT" : `${GROBAL_HTTP_CTX}/agent/getFreeAgent`,    //在线空闲或小休坐席列表查询

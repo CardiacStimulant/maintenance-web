@@ -46,25 +46,23 @@ const proxyConfig = [
     headers: {
       // 这是之前网页的地址，从中可以看到当前请求页面的链接。
      
-      "Referer": "http://127.0.0.1:8888"
+      "Referer": "http://127.0.0.1:8080"
        
     },
     // context，如果不配置，默认就是代理全部。
     router: [
-      '/order', '/IS-server', '/ISC-wo', '/im-service'
+      '/maintenance',
 
     ],
  
-    url: 'http://127.0.0.1:8888'
+    url: 'http://127.0.0.1:8080'
  
   }
 ];
 
 const globalEnvConfig = new webpack.DefinePlugin({
   __MODE__: JSON.stringify(process.env.NODE_ENV),
-  GROBAL_HTTP_CTX: JSON.stringify("/IS-server"),
-  WORK_ORDER_GROBAL_HTTP_CTX: JSON.stringify("/ISC-wo"),
-  IM_SERVER_GROBAL_HTTP_CTX: JSON.stringify("/im-service"),
+  GROBAL_HTTP_CTX: JSON.stringify("/maintenance"),
 })
 
 //开发环境websocket_proxy_url

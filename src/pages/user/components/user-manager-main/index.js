@@ -5,6 +5,7 @@ import ListTable from "components/ListTable";
 import {columns, searchCondition} from "./data/listTableData";
 import * as constant from 'components/constant';
 import './index.less'
+import { actions } from 'mirrorx';
 
 class UserManagerMain extends Component {
     constructor(props){
@@ -16,27 +17,47 @@ class UserManagerMain extends Component {
 
     componentDidMount() {
         // 查询用户管理信息
-        this.queryPage();
+        this.queryPage({
+            pageNum: 1,
+            pageSize: 10,
+        });
     }
 
     /** 点击查询 */
     searchData = () => {
-        this.queryPage();
+        const {userManagerPageCondition} = this.props;
+        this.props.form.validateFields(async (err, values) => {
+            /** 设置查询条件 */
+            let queryListParams = values;
+            queryListParams.pageNum = userManagerPageCondition.pageNum || 1;
+            queryListParams.pageSize = userManagerPageCondition.pageSize || 10;
+            // 查询工单分页数据
+            await this.queryPage(queryListParams);
+        });
     }
 
     /** 点击页数 */
     onPageIndexSelect = (value) => {
-        this.queryPage();
+        const {userManagerPageCondition} = this.props;
+        let params = userManagerPageCondition;
+        params.pageNum = value || 1;
+        params.pageSize = userManagerPageCondition.pageSize || 10;
+        this.queryPage(params);
     }
 
     /** 选择每页条数 */
     onPageSizeSelect = (value) => {
-        this.queryPage();
+        const {userManagerPageCondition} = this.props;
+        let params = userManagerPageCondition;
+        params.pageNum = 1;
+        params.pageSize = value || 10;
+        this.queryPage(params);
     }
 
     /** 查询数据 */
     queryPage = async (params) => {
         this.setState({userManagerLoading: true,});
+        await actions.UserManager.queryPage(params);
         this.setState({userManagerLoading: false,});
     }
 
@@ -54,9 +75,9 @@ class UserManagerMain extends Component {
                     form={this.props.form}
                     handleSearch={this.searchData.bind(this)}
                     columns={columns()}
-                    listDatas={userManagerPageObject.content || []}
-                    totalPages={userManagerPageObject.totalPages || 0}
-                    total={userManagerPageObject.totalElements || 0}
+                    listDatas={userManagerPageObject.list || []}
+                    totalPages={userManagerPageObject.pages || 0}
+                    total={userManagerPageObject.total || 0}
                     onSelect={this.onPageIndexSelect.bind(this)}
                     onDataNumSelect={this.onPageSizeSelect.bind(this)}
                     searchDatas={searchCondition(this.props.form)}

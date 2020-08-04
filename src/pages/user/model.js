@@ -14,6 +14,7 @@ export default {
     // 设置当前 Model 所需的初始化 state
     initialState: {
         userManagerPageObject: {},  // 用户管理分页信息
+        userManagerPageCondition: {},  // 用户管理分页查询条件
     },
     reducers: {
         /**
@@ -29,6 +30,16 @@ export default {
         }
     },
     effects: {
-        
+        async queryPage(param, getState) {
+            let res = await api.queryPage(param);
+            if(res && res.data && res.data.code===200) {
+                actions.UserManager.updateState({
+                    userManagerPageCondition: param || {},
+                    userManagerPageObject: res.data.result || {},
+                });
+            } else {
+                Error(res && res.data && res.data.message ? res.data.message : "请求失败");
+            }
+        }
     },
 };

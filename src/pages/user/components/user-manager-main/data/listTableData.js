@@ -1,11 +1,12 @@
 import React from 'react'
 
 import Form from 'bee-form';
-import { Label, FormControl, Select, } from "tinper-bee";
+import { Label, FormControl, Select, Button, } from "tinper-bee";
 import 'bee-datepicker/build/DatePicker.css';
 import DatePicker from 'bee-datepicker';
 import * as constant from 'components/constant';
 import { Warning, Error, Success } from "utils";
+import $ from 'jquery';
 
 const FormItem = Form.FormItem;
 const Option = Select.Option;
@@ -47,6 +48,7 @@ export function columns(_this){
         title: "工号",
         dataIndex: "jobNumber",
         key: "jobNumber",
+        textAlign: "center",
         width: 150,
         render(text, record, index) {
             let id = record.id || 0;
@@ -65,57 +67,71 @@ export function columns(_this){
         title: "登录账号",
         dataIndex: "loginAccount",
         key: "loginAccount",
+        textAlign: "center",
         width: 150,
     }, {
         title: "姓名",
         dataIndex: "name",
         key: "name",
+        textAlign: "center",
         width: 120,
     }, {
         title: "手机号",
         dataIndex: "mobile",
         key: "mobile",
+        textAlign: "center",
         width: 130,
     }, {
         title: "邮箱",
         dataIndex: "email",
         key: "email",
+        textAlign: "center",
         width: 180,
     }, {
         title: "角色",
         dataIndex: "roleNames",
         key: "roleNames",
+        textAlign: "center",
         width: 200,
     }, {
         title: "创建人",
         dataIndex: "createUser",
         key: "createUser",
+        textAlign: "center",
         width: 100,
     }, {
         title: "创建时间",
         dataIndex: "createTime",
         key: "createTime",
+        textAlign: "center",
         width: 180,
     }, {
         title: "更新人",
         dataIndex: "lastModifyUser",
         key: "lastModifyUser",
+        textAlign: "center",
         width: 100,
     }, {
         title: "更新时间",
         dataIndex: "lastModified",
         key: "lastModified",
+        textAlign: "center",
         width: 180,
     }, {
         title: "操作",
         dataIndex: "operation",
         key: "operation",
+        textAlign: "center",
         render(text, record, index) {
             return (
                 <div className='operation-btn'>
                     <Button size='sm' className='edit-btn' onClick={() => { _this.editUser(record) }}>编辑</Button>
                     <Button size='sm' className='del-btn' onClick={() => { _this.deleteUser(record) }}>删除</Button>
                 </div>
+                // <div trigger="click" placement="right" content={'这是第' + index + '行，订单编号为:' + record.orderCode}>
+                //     <a href="" onClick={() => { _this.editUser(record) }} >编辑</a>
+                //     <a href="" onClick={() => { _this.deleteUser(record) }} >删除</a>
+                // </div>
             )
         }
     }])
@@ -133,9 +149,9 @@ export function searchCondition(form,) {
                             <FormControl
                                 {
                                 ...getFieldProps('jobNumber', {
-                                    value: '',
+                                    initialValue: '',
                                     normalize : function(v) {
-                                        return v = $.trim(v); 
+                                        return v = $.trim(v);
                                     }
                                 })
                                 }
@@ -149,7 +165,7 @@ export function searchCondition(form,) {
                             <FormControl
                                 {
                                 ...getFieldProps('loginAccount', {
-                                    value: '',
+                                    initialValue: '',
                                     normalize : function(v) {
                                         return v = $.trim(v); 
                                     }
@@ -165,7 +181,7 @@ export function searchCondition(form,) {
                             <FormControl
                                 {
                                 ...getFieldProps('name', {
-                                    value: '',
+                                    initialValue: '',
                                     normalize : function(v) {
                                         return v = $.trim(v); 
                                     }
@@ -181,7 +197,7 @@ export function searchCondition(form,) {
                             <FormControl
                                 {
                                 ...getFieldProps('mobile', {
-                                    value: '',
+                                    initialValue: '',
                                     normalize : function(v) {
                                         return v = $.trim(v); 
                                     }
@@ -197,7 +213,7 @@ export function searchCondition(form,) {
                             <FormControl
                                 {
                                 ...getFieldProps('email', {
-                                    value: '',
+                                    initialValue: '',
                                     normalize : function(v) {
                                         return v = $.trim(v); 
                                     }
@@ -210,21 +226,31 @@ export function searchCondition(form,) {
             key:'roleIds',
             components: <FormItem>
                             <Label>角色</Label>
-                            <Select
+                            <FormControl
+                                {
+                                ...getFieldProps('roleName', {
+                                    initialValue: '',
+                                    normalize : function(v) {
+                                        return v = $.trim(v); 
+                                    }
+                                })
+                                }
+                            />
+                            {/* <Select
                                 showSearch
                                 {...getFieldProps('roleIds', {
                                     initialValue: ""
                                 }) }
                             >
                                 <Option key="" value="">未选择</Option>
-                                {/* {
+                                {
                                     staffGroupList.map((staffGroup, index) => {
                                         if(staffGroup.id) {
                                             return <Option key={staffGroup.id + ""} value={staffGroup.id + ""}>{staffGroup.groupName}</Option>
                                         }
                                     })
-                                } */}
-                            </Select>
+                                }
+                            </Select> */}
                         </FormItem>,
         }, {
             attr:constant.attrs,
@@ -250,7 +276,7 @@ export function searchCondition(form,) {
                             <FormControl
                                 {
                                 ...getFieldProps('createUser', {
-                                    value: '',
+                                    initialValue: '',
                                     normalize : function(v) {
                                         return v = $.trim(v); 
                                     }
@@ -282,7 +308,7 @@ export function searchCondition(form,) {
                             <FormControl
                                 {
                                 ...getFieldProps('lastModifyUser', {
-                                    value: '',
+                                    initialValue: '',
                                     normalize : function(v) {
                                         return v = $.trim(v); 
                                     }

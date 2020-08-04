@@ -181,7 +181,6 @@ class ListTable extends Component {
                     {
                         totalPages && total ? <div className='pagination'>
                             <Pagination
-                                locale={locale||false}
                                 first={isSamllBox?false:true}
                                 last={isSamllBox?false:true}
                                 prev
