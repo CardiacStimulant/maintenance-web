@@ -169,3 +169,16 @@ export const menu = [
 
 // 列表页查询条件栅格默认分割
 export const attrs = {lg:3,md:6,sm:6,xs:12,};
+
+/**
+ * 格式校验
+ */
+export const CHECK_EMAIL = /^\w+@[a-z0-9]+\.[a-z]+$/i;  // 邮箱格式
+export const CHECK_NUMBER = /^[1-9]+[0-9]*]*$/; //判断字符串是否为数字（正整数）
+export const CHECK_NUMBER2 = /^[0-9]*]*$/; //判断字符串是否为数字（正整数）包含0
+export const CHECK_NUMBER_LETTER = /^[A-Za-z0-9]*$/; // 判断字符串是否只有数字和字母
+export const CHECK_CHINESE_CHARACTERS = /.*[\u4e00-\u9fa5]+.*$/; //判断字符串是否包含汉字
+
+export const OPERATION_TYPE_ADD = "add";
+export const OPERATION_TYPE_EDIT = "edit";
+export const OPERATION_TYPE_DETAIL = "detail";

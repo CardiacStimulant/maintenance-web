@@ -30,6 +30,11 @@ export default {
         }
     },
     effects: {
+        /**
+         * 查询用户管理分页数据
+         * @param {*} param
+         * @param {*} getState
+         */
         async queryPage(param, getState) {
             let res = await api.queryPage(param);
             if(res && res.data && res.data.code===200) {
@@ -40,6 +45,62 @@ export default {
             } else {
                 Error(res && res.data && res.data.message ? res.data.message : "请求失败");
             }
-        }
+        },
+
+        /**
+         * 新增用户管理
+         * @param {*} param
+         * @param {*} getState
+         */
+        async addUserManger(param, getState) {
+            let res = await api.addUserManger(param);
+            if(res && res.data && res.data.code===200) {
+                return res.data;
+            } else {
+                Error(res && res.data && res.data.message ? res.data.message : "请求失败");
+            }
+        },
+
+        /**
+         * 编辑用户管理
+         * @param {*} param
+         * @param {*} getState
+         */
+        async updateUserManger(param, getState) {
+            let res = await api.updateUserManger(param);
+            if(res && res.data && res.data.code===200) {
+                return res.data;
+            } else {
+                Error(res && res.data && res.data.message ? res.data.message : "请求失败");
+            }
+        },
+
+        /**
+         * 删除用户管理
+         * @param {*} param
+         * @param {*} getState
+         */
+        async deleteUserManger(param, getState) {
+            let res = await api.deleteUserManger(param);
+            if(res && res.data && res.data.code===200) {
+                return res.data;
+            } else {
+                Error(res && res.data && res.data.message ? res.data.message : "请求失败");
+            }
+        },
+
+        /**
+         * 批量删除用户管理
+         * @param {*} param
+         * @param {*} getState
+         */
+        async batchDeleteUserManger(param, getState) {
+            let res = await api.batchDeleteUserManger(param);
+            if(res && res.data && res.data.code===200) {
+                return res.data;
+            } else {
+                Error(res && res.data && res.data.message ? res.data.message : "请求失败");
+            }
+        },
     },
 };

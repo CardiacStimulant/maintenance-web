@@ -93,6 +93,17 @@ export function columns(_this){
         key: "roleNames",
         textAlign: "center",
         width: 200,
+        render(text, record, index) {
+            if(record.roleList && record.roleList.length>0) {
+                let roleNames = "";
+                record.roleList.map((role) => {
+                    roleNames ? roleNames+=("，" + role.name) : roleNames = role.name
+                });
+                return roleNames;
+            } else {
+                return "";
+            }
+        }
     }, {
         title: "创建人",
         dataIndex: "createUser",
@@ -125,13 +136,9 @@ export function columns(_this){
         render(text, record, index) {
             return (
                 <div className='operation-btn'>
-                    <Button size='sm' className='edit-btn' onClick={() => { _this.editUser(record) }}>编辑</Button>
-                    <Button size='sm' className='del-btn' onClick={() => { _this.deleteUser(record) }}>删除</Button>
+                    <Button size='sm' onClick={() => { _this.editUser(record) }}>编辑</Button>
+                    <Button size='sm' onClick={() => { _this.deleteUser(record) }}>删除</Button>
                 </div>
-                // <div trigger="click" placement="right" content={'这是第' + index + '行，订单编号为:' + record.orderCode}>
-                //     <a href="" onClick={() => { _this.editUser(record) }} >编辑</a>
-                //     <a href="" onClick={() => { _this.deleteUser(record) }} >删除</a>
-                // </div>
             )
         }
     }])
