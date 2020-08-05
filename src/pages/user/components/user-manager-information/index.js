@@ -290,7 +290,10 @@ class UserManagerInformation extends Component {
                     </FormItem>
                 </Col>
                 <Col md={12} lg={12} xs={12}>
-                    <Button size='sm' disabled={saveDisabled} className='save-btn' onClick={this.saveUserManger.bind(this)}>保存</Button>
+                    {
+                        operationType==constant.OPERATION_TYPE_DETAIL? ""
+                        : <Button size='sm' disabled={saveDisabled} className='save-btn' onClick={this.saveUserManger.bind(this)}>保存</Button>
+                    }
                     <Button size='sm' className='cancel-btn' onClick={this.props.closeModal.bind(this)}>取消</Button>
                 </Col>
             </Row>

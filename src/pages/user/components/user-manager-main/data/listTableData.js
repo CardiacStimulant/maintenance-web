@@ -1,7 +1,7 @@
 import React from 'react'
 
 import Form from 'bee-form';
-import { Label, FormControl, Select, Button, } from "tinper-bee";
+import { Label, FormControl, Button, } from "tinper-bee";
 import 'bee-datepicker/build/DatePicker.css';
 import DatePicker from 'bee-datepicker';
 import * as constant from 'components/constant';
@@ -9,36 +9,7 @@ import { Warning, Error, Success } from "utils";
 import $ from 'jquery';
 
 const FormItem = Form.FormItem;
-const Option = Select.Option;
 const { RangePicker } = DatePicker;
-
-let tempSearchType = "";
-
-const openmenuClick = (id, _parent, _this) => {
-    let serviceCode = "";
-    switch(tempSearchType) {
-        case constant.WORK_ORDER_LIST_TYPE_GROUP_ALL : serviceCode=constant.YYCTIC006009; break; //组织的全部工单
-        case constant.WORK_ORDER_LIST_TYPE_GROUP_HIGHER : serviceCode=constant.YYCTIC006011; break; //组织的跨组织上游工单
-        case constant.WORK_ORDER_LIST_TYPE_GROUP_LOWER : serviceCode=constant.YYCTIC006010; break; //组织的跨组织下游工单
-        case constant.WORK_ORDER_LIST_TYPE_MY_GROUP_LOWER : serviceCode=constant.YYCTIC006008; break; //我的跨组织下游工单
-        case constant.WORK_ORDER_LIST_TYPE_STAFF_GROUP : serviceCode=constant.YYCTIC006007; break; //我的技能组未接单的工单
-        case constant.WORK_ORDER_LIST_TYPE_MY_STAFF_GROUP : serviceCode=constant.YYCTIC006012; break; //我所在技能组的工单
-        case constant.WORK_ORDER_LIST_TYPE_MY : serviceCode=constant.YYCTIC006006; break; //我的工单
-        case constant.WORK_ORDER_LIST_TYPE_FOLLOW : serviceCode=constant.YYCTIC006005; break; //我关注的工单
-        case constant.WORK_ORDER_LIST_TYPE_CLOSE : serviceCode=constant.YYCTIC006004; break; //我关闭的工单
-        case constant.WORK_ORDER_LIST_TYPE_INVOLVE : serviceCode=constant.YYCTIC006003; break; //我参与的工单
-        case constant.WORK_ORDER_LIST_TYPE_CREATE : serviceCode=constant.YYCTIC006002; break; //我创建的工单
-        case constant.WORK_ORDER_LIST_TYPE_PENDING : serviceCode=constant.YYCTIC006001; break; //待我处理的工单
-        default: Error("列表页类别异常，请联系管理员"); return;
-    }
-    let tabValue = "WorkOrder-detail-" + id;
-    let url =`${PROJECT_DOMAIN_NAME}/fe/work_order#/WorkOrder-detail?search_id=${id}&search_list_type=${tempSearchType}&serviceCode=${tabValue+"_diwork_"+serviceCode}&sourceServiceCode=${serviceCode}`;
-    jDiwork.openService(constant.YYCTIC006009,{},{
-        title: "工单详情",
-        code: tabValue,
-        url: url
-    });
-}
 
 /**
  * 用户列表字段
@@ -52,13 +23,12 @@ export function columns(_this){
         width: 150,
         render(text, record, index) {
             let id = record.id || 0;
-            let tabValue = "user-manager-detail-" + id;
+            let tabValue = "role-manager-detail-" + id;
             //添加下划线，超链接
             return (<a value={tabValue}
                 id={id}
                 className="column-underline list-open" 
-                name="用户详情" 
-                onClick={ openmenuClick.bind(this, record.id, _this) }//绑定事件
+                onClick={ _this.detailUser.bind(this, record, _this) }//绑定事件
                 >
                 {record.jobNumber}
             </a>)

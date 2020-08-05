@@ -97,6 +97,15 @@ class UserManagerMain extends Component {
         });
     }
 
+    /** 用户详情 */
+    detailUser = (data) => {
+        this.setState({
+            showUserManagerModal: true,
+            operationType: constant.OPERATION_TYPE_DETAIL,
+            userManager: data,
+        });
+    }
+
     /** 删除用户 */
     deleteUser = (data) =>{
         this.setState({
@@ -111,7 +120,8 @@ class UserManagerMain extends Component {
             showUserManagerModal: false,
             showDeleteConfirm: false,
             showBatchDeleteConfirm: false,
-            userManager: {}
+            userManager: {},
+            selectData: [],
         });
     }
 
@@ -150,7 +160,6 @@ class UserManagerMain extends Component {
         this.setState({
             deleteDisabled: true,
         });
-        debugger;
         let res = await actions.UserManager.batchDeleteUserManger(selectData);
         if(res && res.success) {
             Success("删除成功");
@@ -184,6 +193,7 @@ class UserManagerMain extends Component {
             <Row className="user-manager-main">
                 <ListTable 
                     form={this.props.form}
+                    clearSelect = {!selectData.length}
                     handleSearch={this.searchData.bind(this)}
                     columns={columns(this)}
                     listDatas={userManagerPageObject.list || []}
