@@ -16,70 +16,35 @@ const { RangePicker } = DatePicker;
  */
 export function columns(_this){
     return ([{
-        title: "工号",
-        dataIndex: "jobNumber",
-        key: "jobNumber",
+        title: "角色名称",
+        dataIndex: "name",
+        key: "name",
         textAlign: "center",
-        width: 150,
+        width: 220,
         render(text, record, index) {
             let id = record.id || 0;
-            let tabValue = "user-manager-detail-" + id;
+            let tabValue = "role-manager-detail-" + id;
             //添加下划线，超链接
             return (<a value={tabValue}
                 id={id}
                 className="column-underline list-open" 
-                onClick={ _this.detailUser.bind(this, record, _this) }//绑定事件
+                onClick={ _this.detailRole.bind(this, record, _this) }//绑定事件
                 >
-                {record.jobNumber}
+                {record.name}
             </a>)
         },
     }, {
-        title: "登录账号",
-        dataIndex: "loginAccount",
-        key: "loginAccount",
-        textAlign: "center",
-        width: 150,
-    }, {
-        title: "姓名",
-        dataIndex: "name",
-        key: "name",
-        textAlign: "center",
-        width: 120,
-    }, {
-        title: "手机号",
-        dataIndex: "mobile",
-        key: "mobile",
-        textAlign: "center",
-        width: 130,
-    }, {
-        title: "邮箱",
-        dataIndex: "email",
-        key: "email",
-        textAlign: "center",
-        width: 180,
-    }, {
-        title: "角色",
-        dataIndex: "roleNames",
-        key: "roleNames",
+        title: "角色编码",
+        dataIndex: "code",
+        key: "code",
         textAlign: "center",
         width: 200,
-        render(text, record, index) {
-            if(record.roleList && record.roleList.length>0) {
-                let roleNames = "";
-                record.roleList.map((role) => {
-                    roleNames ? roleNames+=("，" + role.name) : roleNames = role.name
-                });
-                return roleNames;
-            } else {
-                return "";
-            }
-        }
     }, {
         title: "创建人",
         dataIndex: "createUser",
         key: "createUser",
         textAlign: "center",
-        width: 100,
+        width: 150,
     }, {
         title: "创建时间",
         dataIndex: "createTime",
@@ -91,7 +56,7 @@ export function columns(_this){
         dataIndex: "lastModifyUser",
         key: "lastModifyUser",
         textAlign: "center",
-        width: 100,
+        width: 150,
     }, {
         title: "更新时间",
         dataIndex: "lastModified",
@@ -106,8 +71,9 @@ export function columns(_this){
         render(text, record, index) {
             return (
                 <div className='operation-btn'>
-                    <Button size='sm' onClick={() => { _this.editUser(record) }}>编辑</Button>
-                    <Button size='sm' onClick={() => { _this.deleteUser(record) }}>删除</Button>
+                    <Button size='sm' onClick={() => { _this.editRole(record) }}>编辑</Button>
+                    <Button size='sm' >配置</Button>
+                    <Button size='sm' onClick={() => { _this.deleteRole(record) }}>删除</Button>
                 </div>
             )
         }
@@ -120,12 +86,12 @@ export function searchCondition(form,) {
     return (
         [{
             attr:constant.attrs,
-            key:'jobNumber',
+            key:'name',
             components: <FormItem>
-                            <Label>工号</Label>
+                            <Label>角色名称</Label>
                             <FormControl
                                 {
-                                ...getFieldProps('jobNumber', {
+                                ...getFieldProps('name', {
                                     initialValue: '',
                                     normalize : function(v) {
                                         return v = $.trim(v);
@@ -136,12 +102,12 @@ export function searchCondition(form,) {
                         </FormItem>,
         }, {
             attr:constant.attrs,
-            key:'loginAccount',
+            key:'code',
             components: <FormItem>
-                            <Label>登录账号</Label>
+                            <Label>角色编码</Label>
                             <FormControl
                                 {
-                                ...getFieldProps('loginAccount', {
+                                ...getFieldProps('code', {
                                     initialValue: '',
                                     normalize : function(v) {
                                         return v = $.trim(v); 
@@ -149,85 +115,6 @@ export function searchCondition(form,) {
                                 })
                                 }
                             />
-                        </FormItem>,
-        }, {
-            attr:constant.attrs,
-            key:'name',
-            components: <FormItem>
-                            <Label>姓名</Label>
-                            <FormControl
-                                {
-                                ...getFieldProps('name', {
-                                    initialValue: '',
-                                    normalize : function(v) {
-                                        return v = $.trim(v); 
-                                    }
-                                })
-                                }
-                            />
-                        </FormItem>,
-        }, {
-            attr:constant.attrs,
-            key:'mobile',
-            components: <FormItem>
-                            <Label>手机号</Label>
-                            <FormControl
-                                {
-                                ...getFieldProps('mobile', {
-                                    initialValue: '',
-                                    normalize : function(v) {
-                                        return v = $.trim(v); 
-                                    }
-                                })
-                                }
-                            />
-                        </FormItem>,
-        }, {
-            attr:constant.attrs,
-            key:'email',
-            components: <FormItem>
-                            <Label>邮箱</Label>
-                            <FormControl
-                                {
-                                ...getFieldProps('email', {
-                                    initialValue: '',
-                                    normalize : function(v) {
-                                        return v = $.trim(v); 
-                                    }
-                                })
-                                }
-                            />
-                        </FormItem>,
-        }, {
-            attr:constant.attrs,
-            key:'roleIds',
-            components: <FormItem>
-                            <Label>角色</Label>
-                            <FormControl
-                                {
-                                ...getFieldProps('roleName', {
-                                    initialValue: '',
-                                    normalize : function(v) {
-                                        return v = $.trim(v); 
-                                    }
-                                })
-                                }
-                            />
-                            {/* <Select
-                                showSearch
-                                {...getFieldProps('roleIds', {
-                                    initialValue: ""
-                                }) }
-                            >
-                                <Option key="" value="">未选择</Option>
-                                {
-                                    staffGroupList.map((staffGroup, index) => {
-                                        if(staffGroup.id) {
-                                            return <Option key={staffGroup.id + ""} value={staffGroup.id + ""}>{staffGroup.groupName}</Option>
-                                        }
-                                    })
-                                }
-                            </Select> */}
                         </FormItem>,
         }, {
             attr:constant.attrs,

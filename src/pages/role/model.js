@@ -5,11 +5,11 @@ import { Warning, Error } from "utils";
 
 export default {
     // 确定 Store 中的数据模型作用域
-    name: "UserManager",
+    name: "RoleManager",
     // 设置当前 Model 所需的初始化 state
     initialState: {
-        userManagerPageObject: {},  // 用户管理分页信息
-        userManagerPageCondition: {},  // 用户管理分页查询条件
+        roleManagerPageObject: {},  // 角色管理分页信息
+        roleManagerPageCondition: {},  // 角色管理分页查询条件
     },
     reducers: {
         /**
@@ -26,16 +26,16 @@ export default {
     },
     effects: {
         /**
-         * 查询用户管理分页数据
+         * 查询角色分页数据
          * @param {*} param
          * @param {*} getState
          */
         async queryPage(param, getState) {
             let res = await api.queryPage(param);
             if(res && res.data && res.data.code===200) {
-                actions.UserManager.updateState({
-                    userManagerPageCondition: param || {},
-                    userManagerPageObject: res.data.result || {},
+                actions.RoleManager.updateState({
+                    roleManagerPageCondition: param || {},
+                    roleManagerPageObject: res.data.result || {},
                 });
             } else {
                 Error(res && res.data && res.data.message ? res.data.message : "请求失败");
@@ -43,12 +43,12 @@ export default {
         },
 
         /**
-         * 新增用户管理
+         * 新增角色
          * @param {*} param
          * @param {*} getState
          */
-        async addUserManager(param, getState) {
-            let res = await api.addUserManager(param);
+        async addRole(param, getState) {
+            let res = await api.addRole(param);
             if(res && res.data && res.data.code===200) {
                 return res.data;
             } else {
@@ -57,12 +57,12 @@ export default {
         },
 
         /**
-         * 编辑用户管理
+         * 编辑角色
          * @param {*} param
          * @param {*} getState
          */
-        async updateUserManager(param, getState) {
-            let res = await api.updateUserManager(param);
+        async updateRole(param, getState) {
+            let res = await api.updateRole(param);
             if(res && res.data && res.data.code===200) {
                 return res.data;
             } else {
@@ -71,12 +71,12 @@ export default {
         },
 
         /**
-         * 删除用户管理
+         * 删除角色
          * @param {*} param
          * @param {*} getState
          */
-        async deleteUserManager(param, getState) {
-            let res = await api.deleteUserManager(param);
+        async deleteRole(param, getState) {
+            let res = await api.deleteRole(param);
             if(res && res.data && res.data.code===200) {
                 return res.data;
             } else {
@@ -85,12 +85,12 @@ export default {
         },
 
         /**
-         * 批量删除用户管理
+         * 批量删除角色
          * @param {*} param
          * @param {*} getState
          */
-        async batchDeleteUserManager(param, getState) {
-            let res = await api.batchDeleteUserManager(param);
+        async batchDeleteRole(param, getState) {
+            let res = await api.batchDeleteRole(param);
             if(res && res.data && res.data.code===200) {
                 return res.data;
             } else {

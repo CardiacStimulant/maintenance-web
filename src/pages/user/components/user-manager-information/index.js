@@ -32,7 +32,7 @@ class UserManagerInformation extends Component {
     }
 
     /** 保存用户管理 */
-    saveUserManger = async () => {
+    saveUserManager = async () => {
         const {userManager} = this.props;
         const self = this;
         this.setState({
@@ -55,9 +55,9 @@ class UserManagerInformation extends Component {
                     values.version = userManager.version;
                     values.createTime = userManager.createTime;
                     values.createUser = userManager.createUser;
-                    res = await actions.UserManager.updateUserManger(values);
+                    res = await actions.UserManager.updateUserManager(values);
                 } else {
-                    res = await actions.UserManager.addUserManger(values);
+                    res = await actions.UserManager.addUserManager(values);
                 }
                 if(res && res.success) {
                     Success("保存成功");
@@ -289,10 +289,39 @@ class UserManagerInformation extends Component {
                         </span>
                     </FormItem>
                 </Col>
+                {
+                    operationType===constant.OPERATION_TYPE_DETAIL || operationType===constant.OPERATION_TYPE_EDIT ?
+                    <Row>
+                        <Col md={6} lg={6} xs={6}>
+                            <FormItem>
+                                <Label>创建人</Label>
+                                <FormControl disabled={true} value={userManager.createUser}/>
+                            </FormItem>
+                        </Col>
+                        <Col md={6} lg={6} xs={6}>
+                            <FormItem>
+                                <Label>创建时间</Label>
+                                <FormControl disabled={true} value={userManager.createTime}/>
+                            </FormItem>
+                        </Col>
+                        <Col md={6} lg={6} xs={6}>
+                            <FormItem>
+                                <Label>修改人</Label>
+                                <FormControl disabled={true} value={userManager.lastModifyUser}/>
+                            </FormItem>
+                        </Col>
+                        <Col md={6} lg={6} xs={6}>
+                            <FormItem>
+                                <Label>修改时间</Label>
+                                <FormControl disabled={true} value={userManager.lastModified}/>
+                            </FormItem>
+                        </Col>
+                    </Row> : ""
+                }
                 <Col md={12} lg={12} xs={12}>
                     {
                         operationType==constant.OPERATION_TYPE_DETAIL? ""
-                        : <Button size='sm' disabled={saveDisabled} className='save-btn' onClick={this.saveUserManger.bind(this)}>保存</Button>
+                        : <Button size='sm' disabled={saveDisabled} className='save-btn' onClick={this.saveUserManager.bind(this)}>保存</Button>
                     }
                     <Button size='sm' className='cancel-btn' onClick={this.props.closeModal.bind(this)}>取消</Button>
                 </Col>

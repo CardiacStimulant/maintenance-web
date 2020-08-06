@@ -17,12 +17,10 @@ export const menu = [
           path: 'http://127.0.0.1:3000/fe/user#/',
         },
         {
-          name: 'BaseComponent',
-          path: '/baseComponent',
-        },
-        {
-          name: 'Columns',
-          path: '/column',
+          key: "roleManager",
+          componentName: "role",
+          name: '角色管理',
+          path: 'http://127.0.0.1:3000/fe/role#/',
         },
         {
           name: '搜索条',
