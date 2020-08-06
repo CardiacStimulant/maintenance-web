@@ -14,17 +14,19 @@ export const menu = [
           key: "userManager",
           componentName: "user",
           name: '用户管理',
-          path: 'http://127.0.0.1:3000/fe/user#/',
+          path: `${GLOBAL_COMPONENTS_URL}/fe/user#/`,
         },
         {
           key: "roleManager",
           componentName: "role",
           name: '角色管理',
-          path: 'http://127.0.0.1:3000/fe/role#/',
+          path: `${GLOBAL_COMPONENTS_URL}/fe/role#/`,
         },
         {
-          name: '搜索条',
-          path: '/searchBar',
+          key: "resourceManager",
+          componentName: "resource",
+          name: '资源管理',
+          path: `${GLOBAL_COMPONENTS_URL}/fe/resource#/`,
         },
         {
           name: '数据表格',
@@ -177,6 +179,21 @@ export const CHECK_NUMBER2 = /^[0-9]*]*$/; //判断字符串是否为数字（�
 export const CHECK_NUMBER_LETTER = /^[A-Za-z0-9]*$/; // 判断字符串是否只有数字和字母
 export const CHECK_CHINESE_CHARACTERS = /.*[\u4e00-\u9fa5]+.*$/; //判断字符串是否包含汉字
 
+/**
+ * 操作类型
+ */
 export const OPERATION_TYPE_ADD = "add";
 export const OPERATION_TYPE_EDIT = "edit";
 export const OPERATION_TYPE_DETAIL = "detail";
+
+/**
+ * 资源类型
+ */
+export const RESOURCE_TYPE_MENU = "menu";  // 菜单
+export const RESOURCE_TYPE_BUTTON = "button";  // 按钮
+
+/**
+ * 资源归属
+ */
+export const RESOURCE_OWNER_SYSTEM = "system";
+export const RESOURCE_OWNER_MAINTENANCE = "maintenance";

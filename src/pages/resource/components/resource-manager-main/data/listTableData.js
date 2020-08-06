@@ -1,7 +1,7 @@
 import React from 'react'
 
 import Form from 'bee-form';
-import { Label, FormControl, Button, } from "tinper-bee";
+import { Label, FormControl, Button, Select, } from "tinper-bee";
 import 'bee-datepicker/build/DatePicker.css';
 import DatePicker from 'bee-datepicker';
 import * as constant from 'components/constant';
@@ -10,41 +10,81 @@ import $ from 'jquery';
 
 const FormItem = Form.FormItem;
 const { RangePicker } = DatePicker;
+const Option = Select.Option;
 
 /**
  * 资源列表字段
  */
 export function columns(_this){
     return ([{
-        title: "角色名称",
+        title: "资源名称",
         dataIndex: "name",
         key: "name",
         textAlign: "center",
-        width: 220,
+        width: 160,
         render(text, record, index) {
             let id = record.id || 0;
-            let tabValue = "role-manager-detail-" + id;
+            let tabValue = "resource-manager-detail-" + id;
             //添加下划线，超链接
             return (<a value={tabValue}
                 id={id}
                 className="column-underline list-open" 
-                onClick={ _this.detailRole.bind(this, record, _this) }//绑定事件
+                onClick={ _this.detailResource.bind(this, record, _this) }//绑定事件
                 >
                 {record.name}
             </a>)
         },
     }, {
-        title: "角色编码",
-        dataIndex: "code",
-        key: "code",
+        title: "资源类型",
+        dataIndex: "type",
+        key: "type",
         textAlign: "center",
-        width: 200,
+        width: 100,
+        render(text, record, index) {
+            switch(record.type) {
+                case constant.RESOURCE_TYPE_MENU: return "菜单";
+                case constant.RESOURCE_TYPE_BUTTON: return "按钮";
+                default: return record.type;
+            }
+        },
+    }, {
+        title: "资源归属",
+        dataIndex: "owner",
+        key: "owner",
+        textAlign: "center",
+        width: 100,
+        render(text, record, index) {
+            switch(record.owner) {
+                case constant.RESOURCE_OWNER_SYSTEM: return "系统管理";
+                case constant.RESOURCE_OWNER_MAINTENANCE: return "运维管理";
+                default: return record.owner;
+            }
+        },
+    }, {
+        title: "资源编码",
+        dataIndex: "key",
+        key: "key",
+        textAlign: "center",
+        width: 150,
+        render(text, record, index) {
+            switch(record.key) {
+                case constant.RESOURCE_OWNER_SYSTEM: return "系统管理";
+                case constant.RESOURCE_OWNER_MAINTENANCE: return "运维管理";
+                default: return record.key;
+            }
+        },
+    }, {
+        title: "访问路径",
+        dataIndex: "url",
+        key: "url",
+        textAlign: "center",
+        width: 300,
     }, {
         title: "创建人",
         dataIndex: "createUser",
         key: "createUser",
         textAlign: "center",
-        width: 150,
+        width: 120,
     }, {
         title: "创建时间",
         dataIndex: "createTime",
@@ -56,7 +96,7 @@ export function columns(_this){
         dataIndex: "lastModifyUser",
         key: "lastModifyUser",
         textAlign: "center",
-        width: 150,
+        width: 120,
     }, {
         title: "更新时间",
         dataIndex: "lastModified",
@@ -71,9 +111,8 @@ export function columns(_this){
         render(text, record, index) {
             return (
                 <div className='operation-btn'>
-                    <Button size='sm' onClick={() => { _this.editRole(record) }}>编辑</Button>
-                    <Button size='sm' >配置</Button>
-                    <Button size='sm' onClick={() => { _this.deleteRole(record) }}>删除</Button>
+                    <Button size='sm' onClick={() => { _this.editResource(record) }}>编辑</Button>
+                    <Button size='sm' onClick={() => { _this.deleteResource(record) }}>删除</Button>
                 </div>
             )
         }
@@ -88,7 +127,7 @@ export function searchCondition(form,) {
             attr:constant.attrs,
             key:'name',
             components: <FormItem>
-                            <Label>角色名称</Label>
+                            <Label>资源名称</Label>
                             <FormControl
                                 {
                                 ...getFieldProps('name', {
@@ -102,15 +141,45 @@ export function searchCondition(form,) {
                         </FormItem>,
         }, {
             attr:constant.attrs,
-            key:'code',
+            key:'type',
             components: <FormItem>
-                            <Label>角色编码</Label>
+                            <Label>资源类型</Label>
+                            <Select
+                                {...getFieldProps('type', {
+                                    initialValue: "",
+                                }) }
+                            >
+                                <Option value={""}>未选择</Option>
+                                <Option value={constant.RESOURCE_TYPE_MENU}>菜单</Option>
+                                <Option value={constant.RESOURCE_TYPE_BUTTON}>按钮</Option>
+                            </Select>
+                        </FormItem>,
+        }, {
+            attr:constant.attrs,
+            key:'owner',
+            components: <FormItem>
+                            <Label>资源归属</Label>
+                            <Select
+                                {...getFieldProps('owner', {
+                                    initialValue: "",
+                                }) }
+                            >
+                                <Option value={""}>未选择</Option>
+                                <Option value={constant.RESOURCE_OWNER_SYSTEM}>系统管理</Option>
+                                <Option value={constant.RESOURCE_OWNER_MAINTENANCE}>运维管理</Option>
+                            </Select>
+                        </FormItem>,
+        }, {
+            attr:constant.attrs,
+            key:'key',
+            components: <FormItem>
+                            <Label>资源编码</Label>
                             <FormControl
                                 {
-                                ...getFieldProps('code', {
+                                ...getFieldProps('key', {
                                     initialValue: '',
                                     normalize : function(v) {
-                                        return v = $.trim(v); 
+                                        return v = $.trim(v);
                                     }
                                 })
                                 }
