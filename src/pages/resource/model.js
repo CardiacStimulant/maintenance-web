@@ -35,7 +35,7 @@ export default {
             if(res && res.code===200) {
                 actions.ResourceManager.updateState({
                     resourceManagerPageCondition: param || {},
-                    resourceManagerPageObject: res.data.result || {},
+                    resourceManagerPageObject: res.result || {},
                 });
             } else {
                 Error(res && res.message ? res.message : "请求失败");

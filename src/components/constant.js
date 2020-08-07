@@ -28,40 +28,6 @@ export const menu = [
           name: '资源管理',
           path: `${GLOBAL_COMPONENTS_URL}/fe/resource#/`,
         },
-        {
-          name: '数据表格',
-          path: '/datatable',
-        },
-        {
-          name: '表单',
-          path: '/form',
-        },
-        {
-          name: '穿梭树',
-          path: '/transferTree',
-        },
-        {
-          name: '图表',
-          path: '/charts',
-          children: [
-            {
-              name: 'ECharts',
-              path: '/charts/ec',
-            },
-            {
-              name: 'G2',
-              path: '/charts/g2',
-            },
-          ]
-        },
-        {
-          name: '打印',
-          path: '/print',
-        },
-        {
-          name: 'Banner 管理',
-          path: '/banner',
-        },
       ],
     },
     {
