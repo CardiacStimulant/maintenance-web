@@ -72,7 +72,7 @@ export function columns(_this){
             return (
                 <div className='operation-btn'>
                     <Button size='sm' onClick={() => { _this.editRole(record) }}>编辑</Button>
-                    <Button size='sm' >配置</Button>
+                    <Button size='sm' onClick={() => { _this.resourceConfig(record) }}>配置</Button>
                     <Button size='sm' onClick={() => { _this.deleteRole(record) }}>删除</Button>
                 </div>
             )

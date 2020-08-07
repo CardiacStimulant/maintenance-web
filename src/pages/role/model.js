@@ -1,7 +1,8 @@
 import { actions } from "mirrorx";
 // 引入services，如不需要接口请求可不写
 import * as api from "./service";
-import { Warning, Error } from "utils";
+import { Warning, Error, processData } from "utils";
+import { reset } from "fetch-mock";
 
 export default {
     // 确定 Store 中的数据模型作用域
@@ -31,15 +32,16 @@ export default {
          * @param {*} getState
          */
         async queryPage(param, getState) {
-            let res = await api.queryPage(param);
-            if(res && res.data && res.data.code===200) {
+            let res = processData(await api.queryPage(param));
+            if(res.code===200) {
                 actions.RoleManager.updateState({
                     roleManagerPageCondition: param || {},
-                    roleManagerPageObject: res.data.result || {},
+                    roleManagerPageObject: res.result || {},
                 });
             } else {
-                Error(res && res.data && res.data.message ? res.data.message : "请求失败");
+                Error(res.message ? res.message : "数据返回异常");
             }
+            return res;
         },
 
         /**
@@ -48,12 +50,8 @@ export default {
          * @param {*} getState
          */
         async addRole(param, getState) {
-            let res = await api.addRole(param);
-            if(res && res.data && res.data.code===200) {
-                return res.data;
-            } else {
-                Error(res && res.data && res.data.message ? res.data.message : "请求失败");
-            }
+            let res = processData(await api.addRole(param));
+            return res;
         },
 
         /**
@@ -62,12 +60,8 @@ export default {
          * @param {*} getState
          */
         async updateRole(param, getState) {
-            let res = await api.updateRole(param);
-            if(res && res.data && res.data.code===200) {
-                return res.data;
-            } else {
-                Error(res && res.data && res.data.message ? res.data.message : "请求失败");
-            }
+            let res = processData(await api.updateRole(param));
+            return res;
         },
 
         /**
@@ -76,12 +70,8 @@ export default {
          * @param {*} getState
          */
         async deleteRole(param, getState) {
-            let res = await api.deleteRole(param);
-            if(res && res.data && res.data.code===200) {
-                return res.data;
-            } else {
-                Error(res && res.data && res.data.message ? res.data.message : "请求失败");
-            }
+            let res = processData(await api.deleteRole(param));
+            return res;
         },
 
         /**
@@ -90,12 +80,48 @@ export default {
          * @param {*} getState
          */
         async batchDeleteRole(param, getState) {
-            let res = await api.batchDeleteRole(param);
-            if(res && res.data && res.data.code===200) {
-                return res.data;
-            } else {
-                Error(res && res.data && res.data.message ? res.data.message : "请求失败");
-            }
+            let res = processData(await api.batchDeleteRole(param));
+            return res;
+        },
+
+        /**
+         * 角色添加全部未配置的资源
+         * @param {*} param 
+         * @param {*} getState 
+         */
+        async addAllRoleResource(param, getState) {
+            let res = processData(await api.addAllRoleResource(param));
+            return res;
+        },
+
+        /**
+         * 角色添加未配置的资源
+         * @param {*} param 
+         * @param {*} getState 
+         */
+        async addRoleResources(param, getState) {
+            let res = processData(await api.addRoleResources(param));
+            return res;
+        },
+
+        /**
+         * 角色移除全部配置的资源
+         * @param {*} param 
+         * @param {*} getState 
+         */
+        async removeAllRoleResource(param, getState) {
+            let res = processData(await api.removeAllRoleResource(param));
+            return res;
+        },
+
+        /**
+         * 角色移除配置的资源
+         * @param {*} param 
+         * @param {*} getState 
+         */
+        async removeRoleResources(param, getState) {
+            let res = processData(await api.removeRoleResources(param));
+            return res;
         },
     },
 };

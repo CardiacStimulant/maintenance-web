@@ -78,30 +78,18 @@ export const Warning = (msg, duration) => {
  */
 export const processData = (response,successMsg) => {
     if(typeof response != 'object') {
-        Error('数据返回出错：1、请确保服务运行正常；2、请确保您的前端工程代理服务正常；3、请确认您已在本地登录过应用平台');
+        Error('数据返回出错，服务异常');
         return false;
     }
-    if(response.status=='401'){
-        Error(`错误:${(response.data.msg)}`);
-        return false;
-    }
-    if(response.status=='200'){
-        let data=response.data;
-        let repMsg = data.success;
-        if(repMsg=='success'){
-            if(successMsg){
-                Success(successMsg);
-            }
-            return data.detailMsg.data;
-        }else if(repMsg=='fail_field'){
-            Error(`错误:${(data && data.detailMsg && convert(data.detailMsg.msg)) || '数据返回出错'}`);
-        }else {
-            Error(`错误:${convert(data.message)}`);
+    if(response && response.data) {
+        if(successMsg) {
+            Success(successMsg);
         }
-    }else{
-        Error('系统异常，请联系管理员');
+        return response.data;
+    } else {
+        Error("请求失败");
+        return false;
     }
-    return false;
 }
 
 /**

@@ -3,11 +3,11 @@ import * as commonUtils from 'utils/commonUtils';
 
 //定义接口地址
 const URL = {
-    "QUERY_PAGE" : `${GROBAL_HTTP_CTX}/resourceManager/queryPage`,  //查询资源分页数据
-    "ADD_RESOURCE" : `${GROBAL_HTTP_CTX}/resourceManager/addResource`,  //新增资源
-    "UPDATE_RESOURCE" : `${GROBAL_HTTP_CTX}/resourceManager/updateResource`,  //更新资源
-    "DELETE_RESOURCE" : `${GROBAL_HTTP_CTX}/resourceManager/deleteResource`,  //删除资源
-    "BATCH_DELETE_RESOURCE" : `${GROBAL_HTTP_CTX}/resourceManager/batchDeleteResource`,  //批量删除资源
+    "QUERY_PAGE" : `${GROBAL_HTTP_CTX}/resource/queryPage`,  //查询资源分页数据
+    "ADD_RESOURCE" : `${GROBAL_HTTP_CTX}/resource/addResource`,  //新增资源
+    "UPDATE_RESOURCE" : `${GROBAL_HTTP_CTX}/resource/updateResource`,  //更新资源
+    "DELETE_RESOURCE" : `${GROBAL_HTTP_CTX}/resource/deleteResource`,  //删除资源
+    "BATCH_DELETE_RESOURCE" : `${GROBAL_HTTP_CTX}/resource/batchDeleteResource`,  //批量删除资源
 }
 
 /**

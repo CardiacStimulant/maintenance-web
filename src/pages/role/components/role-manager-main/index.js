@@ -5,6 +5,7 @@ import ListTable from "components/ListTable";
 import {columns, searchCondition} from "./data/listTableData";
 import * as constant from 'components/constant';
 import RoleManagerInformation from "../role-manager-information";
+import RoleResourceConfig from "../role_resource_config";
 import { Success, Warning, Error } from "utils";
 import './index.less'
 import { actions } from 'mirrorx';
@@ -15,6 +16,7 @@ class RoleManagerMain extends Component {
         this.state = {
             roleManagerLoading: true,   // 角色管理loading是否显示
             showRoleManagerModal: false,    // 是否显示角色管理modal
+            showRoleResourceConfigModal: false, // 是否显示角色资源配置modal
             showDeleteConfirm: false,   // 是否显示删除提示
             showBatchDeleteConfirm: false,  // 是否显示批量删除提示
             operationType: constant.OPERATION_TYPE_ADD, // 操作类型
@@ -114,12 +116,21 @@ class RoleManagerMain extends Component {
         });
     }
 
+    /** 角色配置资源权限 */
+    resourceConfig = (data) => {
+        this.setState({
+            showRoleResourceConfigModal: true,
+            role: data
+        });
+    }
+
     /** 关闭modal */
     closeModal = () => {
         this.setState({
             showRoleManagerModal: false,
             showDeleteConfirm: false,
             showBatchDeleteConfirm: false,
+            showRoleResourceConfigModal: false,
             role: {},
             selectData: [],
         });
@@ -178,7 +189,7 @@ class RoleManagerMain extends Component {
 
     render(){
         const {roleManagerPageObject} = this.props;
-        const {roleManagerLoading, showRoleManagerModal, showDeleteConfirm, showBatchDeleteConfirm, role, operationType, deleteDisabled, selectData,} = this.state;
+        const {roleManagerLoading, showRoleManagerModal, showDeleteConfirm, showBatchDeleteConfirm, role, operationType, deleteDisabled, selectData, showRoleResourceConfigModal,} = this.state;
         let modalTitle = "";
         if(operationType === constant.OPERATION_TYPE_ADD) {
             modalTitle = "新增角色";
@@ -237,7 +248,7 @@ class RoleManagerMain extends Component {
                     backdrop = "static"
                     onHide={this.closeModal.bind(this)} >
                     <Modal.Header closeButton>
-                        <Modal.Title>{"确定删除角色：" + role.name + "(" + role.code + ")？"}</Modal.Title>
+                        <Modal.Title>{"确定删除角色：" + role.name + "（" + role.code + "）？"}</Modal.Title>
                     </Modal.Header>
                     <Modal.Footer>
                         <Button onClick={this.closeModal.bind(this)} shape="border">取消</Button>
@@ -257,6 +268,22 @@ class RoleManagerMain extends Component {
                         <Button onClick={this.closeModal.bind(this)} shape="border">取消</Button>
                         <Button disabled={deleteDisabled} onClick={this.confirmBatchDeleteRole.bind(this)} colors="primary">确认</Button>
                     </Modal.Footer>
+                </Modal>
+
+                {/* 角色资源配置 */}
+                <Modal
+                    className="role-resource-config-modal"
+                    backdrop = "static"
+                    onHide = { this.closeModal.bind(this) }
+                    size={"xlg"}
+                    show={showRoleResourceConfigModal}
+                >
+                    <Modal.Header closeButton>
+                        <Modal.Title>{role.name + "（" + role.code + "）" + "资源配置"}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <RoleResourceConfig role={role} closeModal={this.closeModal.bind(this)} />
+                    </Modal.Body>
                 </Modal>
             </Row>
         )

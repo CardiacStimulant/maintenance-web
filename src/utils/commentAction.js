@@ -18,11 +18,7 @@ export const commentGetRequest = async(params, url, model, modelProperty, condit
     for(let attr in params){
         // 替换+，空格，/，?，%，#，&，=
         params[attr] = commonUtils.replaceSpecialCharacters(params[attr]);
-        if(noSearchPrefix) {
-            url += '&' + attr+'='+params[attr];
-        } else {
-            url += '&search_'+attr+'='+params[attr];
-        }
+        url += '&' + attr+'='+params[attr];
         // 是否设置查询条件对象
         if(conditionObjectName) {
             conditionObject[attr] = params[attr];
@@ -87,7 +83,23 @@ export const commentPostRequest = async(params, url, model, modelProperty) => {
  */
 export const role_queryList = async (params, model, modelProperty, prefixUrl, conditionObjectName) => {
     // 请求地址
-    let url = prefixUrl + '/roleManager/queryList?1=1';
+    let url = prefixUrl + '/role/queryList?1=1';
+    // 返回数据
+    return await commentGetRequest(params, url, model, modelProperty, conditionObjectName);
+}
+
+/********************************** 资源接口 **********************************/
+/**
+ * 查询资源分页数据
+ * @param {参数} params 分页条件必传，pageNum：页码，pageSize：页大小，roleId必传，searchConfig必传
+ * @param {对应各模块的model} model
+ * @param {model需要设置的属性} modelProperty
+ * @param {请求地址前缀} prefixUrl
+ * @param {查询条件对象名称，不为空，则设置model的查询条件对象} conditionObjectName 
+ */
+export const resource_queryConfigPage = async (params, model, modelProperty, prefixUrl, conditionObjectName) => {
+    // 请求地址
+    let url = prefixUrl + '/resource/queryConfigPage?1=1';
     // 返回数据
     return await commentGetRequest(params, url, model, modelProperty, conditionObjectName);
 }

@@ -17,13 +17,13 @@ export const menu = [
           path: `${GLOBAL_COMPONENTS_URL}/fe/user#/`,
         },
         {
-          key: "roleManager",
+          key: "role",
           componentName: "role",
           name: '角色管理',
           path: `${GLOBAL_COMPONENTS_URL}/fe/role#/`,
         },
         {
-          key: "resourceManager",
+          key: "resource",
           componentName: "resource",
           name: '资源管理',
           path: `${GLOBAL_COMPONENTS_URL}/fe/resource#/`,
