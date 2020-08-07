@@ -1,10 +1,5 @@
 // 主页面菜单标签
 export const menu = [
-    // {
-    //   name: '仪表盘',
-    //   icon: 'DashboardOutlined',
-    //   path: '/dashboard',
-    // },
     {
       name: '系统管理',
       icon: 'UserOutlined',
