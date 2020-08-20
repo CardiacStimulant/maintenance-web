@@ -1,133 +1,3 @@
-// 主页面菜单标签
-export const menu = [
-    {
-      name: '系统管理',
-      icon: 'UserOutlined',
-      path: '/component',
-      children: [
-        {
-          key: "userManager",
-          componentName: "user",
-          name: '用户管理',
-          path: `${GLOBAL_COMPONENTS_URL}/fe/user#/`,
-        },
-        {
-          key: "role",
-          componentName: "role",
-          name: '角色管理',
-          path: `${GLOBAL_COMPONENTS_URL}/fe/role#/`,
-        },
-        {
-          key: "resource",
-          componentName: "resource",
-          name: '资源管理',
-          path: `${GLOBAL_COMPONENTS_URL}/fe/resource#/`,
-        },
-      ],
-    },
-    {
-      name: 'UI元素',
-      icon: 'ShareAltOutlined',
-      path: '/ui',
-      children: [
-        {
-          name: '按钮',
-          path: '/button',
-        },
-        {
-          name: '图片',
-          path: '/image',
-        },
-        {
-          name: '消息',
-          path: '/alerts',
-        },
-        {
-          name: '动画',
-          path: '/animations',
-        },
-        {
-          name: '图标',
-          path: '/icons',
-        },
-        {
-          name: '富文本',
-          path: '/editor',
-        },
-        {
-          name: '模态窗',
-          path: '/modal',
-        },
-        {
-          name: '遮罩',
-          path: '/mask',
-        },
-      ],
-    },
-    {
-      name: '页面',
-      icon: 'BookOutlined',
-      path: '/page',
-      children: [
-        {
-          name: '登录页',
-          path: '/login',
-        },
-        {
-          name: '注册页',
-          path: '/sign/register',
-        },
-        {
-          name: '锁屏',
-          path: '/lock',
-        },
-        {
-          name: '画廊',
-          path: '/gallery',
-        },
-        {
-          name: '空白页',
-          path: '/blank',
-        },
-        {
-          name: '结果页',
-          path: '/result',
-        },
-        {
-          name: 'Coming Soon',
-          path: '/coming',
-        },
-        {
-          name: '403',
-          path: '/403',
-        },
-        {
-          name: '404',
-          path: '/404',
-        },
-        {
-          name: '500',
-          path: '/500',
-        },
-        {
-          name: '多级路由',
-          path: '/level-route/:sub?',
-        },
-      ],
-    },
-    {
-      name: '通用场景',
-      icon: 'BulbOutlined',
-      path: '/business',
-      children: [
-        {
-          name: 'CRUD',
-          path: '/crud/:detail?',
-        }
-      ],
-    },
-];
-
 // 列表页查询条件栅格默认分割
 export const attrs = {lg:3,md:6,sm:6,xs:12,};
 
@@ -158,3 +28,18 @@ export const RESOURCE_TYPE_BUTTON = "button";  // 按钮
  */
 export const RESOURCE_OWNER_SYSTEM = "system";
 export const RESOURCE_OWNER_MAINTENANCE = "maintenance";
+
+/**
+ * 日志-业务类型
+ */
+export const LOG_BUSINESS_TYPE_USER = "user";
+export const LOG_BUSINESS_TYPE_ROLE = "role";
+export const LOG_BUSINESS_TYPE_RESOURCE = "resource";
+export const LOG_BUSINESS_TYPE_TENANT_TELEPHONE_NUMBER = "tenantTelephoneNumber";
+
+/**
+ * 日志-操作类型
+ */
+export const LOG_OPERATION_TYPE_ADD = "add";
+export const LOG_OPERATION_TYPE_UPDATE = "update";
+export const LOG_OPERATION_TYPE_DELETE = "delete";

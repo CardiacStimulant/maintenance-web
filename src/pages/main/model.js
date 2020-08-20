@@ -3,16 +3,14 @@ import { actions } from "mirrorx";
 import * as api from "./service";
 // 接口返回数据公共处理方法，根据具体需要
 import { processData } from "utils";
-import * as constant from 'components/constant';
-import * as commentAction from "utils/commentAction";
 import { Warning, Error } from "utils";
-import $ from "jquery";
 
 export default {
     // 确定 Store 中的数据模型作用域
     name: "Maintenance",
     // 设置当前 Model 所需的初始化 state
     initialState: {
+        userInfo: {},   // 当前用户信息
         tabMenus: [],   // tab的所有menu
         activeMenu: {}, // tab当前激活的menu
         flatMenu: [],
@@ -31,6 +29,32 @@ export default {
         }
     },
     effects: {
+        /**
+         * 退出登录
+         * @param {*} param
+         * @param {*} getState
+         */
+        async logout(param, getState) {
+            let res = processData(await api.logout(param));
+            if(res && res.code===200) {
+                return res;
+            } else {
+                Error(res && res.message ? res.message : "请求失败");
+            }
+        },
 
+        /**
+         * 更新用户密码
+         * @param {*} param 
+         * @param {*} getState 
+         */
+        async updateUserPassword(param, getState) {
+            let res = processData(await api.updateUserPassword(param));
+            if(res && res.code===200) {
+                return res;
+            } else {
+                Error(res && res.message ? res.message : "请求失败");
+            }
+        }
     },
 };

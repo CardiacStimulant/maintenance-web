@@ -174,8 +174,8 @@ class ResourceManagerInformation extends Component {
                                         var errors = [];
                                         if(!value) {
                                             callback("不可为空");
-                                        } else if (value.length>16) {
-                                            callback("超过最大长度16");
+                                        } else if (value.length>32) {
+                                            callback("超过最大长度32");
                                         } else if (!constant.CHECK_NUMBER_LETTER.test(value)) {
                                             callback("只能填写数字和字母组合");
                                         } else {

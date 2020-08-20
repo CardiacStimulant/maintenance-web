@@ -10,8 +10,12 @@ import $$ from 'cmn-utils';
 import cx from 'classnames';
 import isEqual from 'react-fast-compare';
 import { SwitchTransition, CSSTransition } from 'react-transition-group';
-import {menu} from "components/constant";
+import {Modal, } from "tinper-bee";
+import * as commentAction from "utils/commentAction";
+import UserConfig from "./user-config";
 import { actions } from "mirrorx";
+import * as constant from 'components/constant';
+import { Warning, Error, Success } from "utils";
 import './styles/transition.less';
 import './styles/basic.less';
 
@@ -21,7 +25,6 @@ const { Content, Header } = Layout;
  * 基本部局
  * 可设置多种皮肤 theme: [light, grey, primary, info, warning, danger, alert, system, success, dark]
  * 可设置多种布局 [header(固定头), sidebar(固定边栏), breadcrumb(固定面包蟹), tabLayout(标签布局)]
- * @author weiq
  */
 export default class BasicLayout extends React.PureComponent {
   constructor(props) {
@@ -47,6 +50,8 @@ export default class BasicLayout extends React.PureComponent {
       theme, // 皮肤设置
       user,
       currentMenu: {},
+      menu: [], // 菜单
+      showUserConfigModal: false, // 是否显示账户设置modal
     };
 
     props.dispatch({
@@ -54,16 +59,56 @@ export default class BasicLayout extends React.PureComponent {
     });
   }
 
-  componentDidMount() {
-    this.checkLoginState();
-  }
-
-  // 检查有户是否登录
-  checkLoginState() {
-    // const user = $$.getStore('user');
-    // if (!user) {
-    //   this.props.dispatch(routerRedux.replace('/sign/login'));
-    // }
+  async componentDidMount() {
+    // 获取当前登录用户信息
+    await commentAction.comment_getUserInfo({}, actions.Maintenance, "userInfo", `${GROBAL_HTTP_CTX}`);
+    const {userInfo} = this.props;
+    if(userInfo && userInfo.user && userInfo.user.id) {
+      // 设置菜单权限
+      if(userInfo.resourceList && userInfo.resourceList.length>0) {
+        // 菜单项
+        let menus = [];
+        // 系统管理菜单
+        let systemMenus = {
+          name: '系统管理',
+          icon: 'UserOutlined',
+          children: [],
+        };
+        // 运维管理菜单项
+        let maintenanceMenus = {
+          name: '运维管理',
+          icon: 'ShareAltOutlined',
+          children: [],
+        };
+        // 遍历角色资源，配置菜单
+        userInfo.resourceList.map((resource) => {
+          if(resource.type===constant.RESOURCE_TYPE_MENU) {
+            if(resource.owner===constant.RESOURCE_OWNER_SYSTEM) {
+              // 系统管理菜单
+              systemMenus.children.push({
+                key: resource.key,
+                name: resource.name,
+                path: `${GLOBAL_COMPONENTS_URL}` + resource.url,
+              });
+            } else if(resource.owner===constant.RESOURCE_OWNER_MAINTENANCE) {
+              // 运维管理菜单
+              maintenanceMenus.children.push({
+                key: resource.key,
+                name: resource.name,
+                path: `${GLOBAL_COMPONENTS_URL}` + resource.url,
+              });
+            }
+          }
+        });
+        menus.push(systemMenus);
+        menus.push(maintenanceMenus);
+        this.setState({
+          menu: menus,
+        });
+      }
+    } else {
+      Error("当前用户未登录");
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -176,6 +221,25 @@ export default class BasicLayout extends React.PureComponent {
     });
   }
 
+  // 账户设置
+  userConfig = () => {
+    this.setState({
+      showUserConfigModal: true, // 是否显示账户设置modal
+    });
+  }
+
+  // 关闭modal
+  closeModal = () => {
+    this.setState({
+      showUserConfigModal: false, // 是否显示账户设置modal
+    });
+  }
+
+  // 登出
+  logout= () => {
+    actions.Maintenance.logout({});
+  }
+
   render() {
     const {
       collapsedLeftSide,
@@ -186,8 +250,10 @@ export default class BasicLayout extends React.PureComponent {
       theme,
       user,
       currentMenu,
+      menu,
+      showUserConfigModal,
     } = this.state;
-    const { routerData, location, flatMenu, activeMenu, tabMenus, } = this.props;
+    const { routerData, location, flatMenu, activeMenu, tabMenus, userInfo, } = this.props;
     // const { childRoutes } = routerData;
     const classnames = cx('basic-layout', 'full-layout', {
       fixed: theme.layout && theme.layout.indexOf('fixedSidebar') !== -1,
@@ -208,6 +274,8 @@ export default class BasicLayout extends React.PureComponent {
             onExpandTopBar={this.onExpandTopBar}
             toggleSidebarHeader={this.toggleSidebarHeader}
             theme={theme.navbar}
+            logout={this.logout.bind(this)}
+            userConfig={this.userConfig.bind(this)}
             user={user}
           />
         </Header>
@@ -266,6 +334,19 @@ export default class BasicLayout extends React.PureComponent {
           />
         </Layout>
         <SkinToolbox onChangeTheme={this.onChangeTheme} theme={theme} />
+        
+        {/* 账户设置modal */}
+        <Modal
+            show={showUserConfigModal}
+            backdrop = "static"
+            onHide={this.closeModal.bind(this)} >
+            <Modal.Header closeButton>
+                <Modal.Title>{(userInfo.user ? userInfo.user.name || "" : "") + "账户设置"}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <UserConfig closeModal={this.closeModal.bind(this)} userInfo={userInfo} />
+            </Modal.Body>
+        </Modal>
       </Layout>
     );
   }

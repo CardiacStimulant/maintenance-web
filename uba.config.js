@@ -63,11 +63,12 @@ const proxyConfig = [
 const globalEnvConfig = new webpack.DefinePlugin({
   __MODE__: JSON.stringify(process.env.NODE_ENV),
   GROBAL_HTTP_CTX: JSON.stringify("/maintenance"),
+  GLOBAL_COMPONENTS_URL: JSON.stringify("https://yytx.maintenance.com"),
+  GLOBAL_LOGIN_URL: JSON.stringify("https://yytx.maintenance.com"),
 })
 
 //开发环境websocket_proxy_url
 const dev_websocket_proxy_url_config = new webpack.DefinePlugin({
-  GLOBAL_COMPONENTS_URL: JSON.stringify("http://127.0.0.1:3000"),
   websocket_proxy_url: JSON.stringify("wss://yycti-daily.yyuap.com:7443"), //wss://pay.yonyoutelecom.cn:5443
 })
 //测试环境websocket_proxy_url

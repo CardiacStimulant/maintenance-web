@@ -35,7 +35,7 @@ export const commentGetRequest = async(params, url, model, modelProperty, condit
             object[modelProperty] = res.data.result || res.data || defaultResult;
         } else {
             // 设置结果对象
-            object[modelProperty] = res.data || defaultResult;
+            object[modelProperty] = res || defaultResult;
         }
         // 是否设置查询条件对象
         if(conditionObjectName) {
@@ -70,6 +70,22 @@ export const commentPostRequest = async(params, url, model, modelProperty) => {
     }
     // 返回数据
     return res.data;
+}
+
+/********************************** 登录信息接口 **********************************/
+/**
+ * 获取当前登录用户信息
+ * @param {参数} params
+ * @param {对应各模块的model} model
+ * @param {model需要设置的属性} modelProperty
+ * @param {请求地址前缀} prefixUrl
+ * @param {查询条件对象名称，不为空，则设置model的查询条件对象} conditionObjectName 
+ */
+export const comment_getUserInfo = async (params, model, modelProperty, prefixUrl, conditionObjectName) => {
+    // 请求地址
+    let url = prefixUrl + '/getUserInfo?1=1';
+    // 返回数据
+    return await commentGetRequest(params, url, model, modelProperty, conditionObjectName);
 }
 
 /********************************** 角色接口 **********************************/

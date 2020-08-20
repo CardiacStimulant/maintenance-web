@@ -4,6 +4,8 @@ import { Row, FormControl, Button, } from "tinper-bee";
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Checkbox, } from 'antd';
 import logoImg from 'static/fe/static/assets/images/logo1.png';
+import { actions } from 'mirrorx';
+import { Success, Warning, Error } from "utils";
 import './index.less';
 
 const FormItem = Form.FormItem;
@@ -22,12 +24,24 @@ class LoginMain extends Component {
         submitDisabled: true,
       });
       if (!err) {
-
+        // 登录账号
+        const loginResult = await actions.Login.login(values);
+        if(loginResult && loginResult.success) {
+          window.location.href=`${GLOBAL_COMPONENTS_URL}/fe/main#/`;
+        } else {
+          this.setState({
+            submitDisabled: false,
+          });
+          if(loginResult && loginResult.message) {
+            Error(loginResult.message);
+          }
+        }
       } else {
         this.setState({
-          saveDisabled: false,
+          submitDisabled: false,
         });
       }
+      
     });
   };
 
@@ -48,7 +62,7 @@ class LoginMain extends Component {
               size="lg"
               prefix={<UserOutlined />}
               placeholder="用户名"
-              {...getFieldProps('userName', {
+              {...getFieldProps('loginAccount', {
                 initialValue: "",
                 validateTrigger: ['onChange','onBlur'],
                 rules: [
@@ -66,7 +80,7 @@ class LoginMain extends Component {
               }) }
             />
             <span className='error'>
-                {getFieldError('userName')}
+                {getFieldError('loginAccount')}
             </span>
           </FormItem>
           <FormItem name="password" rules={[{ required: true, message: '请输入您的密码' }]}>

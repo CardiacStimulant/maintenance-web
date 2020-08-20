@@ -169,10 +169,7 @@ export default class TabsLayout extends React.PureComponent {
               >
                 {tabMenus.map(item => (
                   <TabPane tab={<div className="tab-title">{item.name || 'tag'}</div>} key={item.key}>
-                    {/* <Link to={"/fe/" + item.componentName} /> */}
-                    {/* <Link to={"user"} > link </Link> */}
-                    {/* <Link to={location => `${location.pathname}`} /> */}
-                    <iframe name={"iframe" + item.key} id={"iframe" + item.key} height="100%" width="100%" src={`${GLOBAL_COMPONENTS_URL}/fe/${item.componentName}#/`}></iframe>
+                    <iframe name={"iframe" + item.key} id={"iframe" + item.key} height="100%" width="100%" src={item.path}></iframe>
                   </TabPane>
                 ))}
               </Tabs>

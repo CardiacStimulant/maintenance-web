@@ -38,7 +38,7 @@ class ResourceManagerMain extends Component {
         this.props.form.validateFields(async (err, values) => {
             /** 设置查询条件 */
             let queryListParams = values;
-            queryListParams.pageNum = resourceManagerPageCondition.pageNum || 1;
+            queryListParams.pageNum = 1;
             queryListParams.pageSize = resourceManagerPageCondition.pageSize || 10;
             // 查询工单分页数据
             await this.queryPage(queryListParams);

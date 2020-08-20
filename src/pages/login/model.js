@@ -29,6 +29,18 @@ export default {
         }
     },
     effects: {
-        
+        /**
+         * 登录
+         * @param {*} param
+         * @param {*} getState
+         */
+        async login(param, getState) {
+            let res = processData(await api.login(param));
+            if(res && res.code===200) {
+                return res;
+            } else {
+                Error(res && res.message ? res.message : "请求失败");
+            }
+        },
     },
 };

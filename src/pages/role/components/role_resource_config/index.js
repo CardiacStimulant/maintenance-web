@@ -87,11 +87,11 @@ class RoleResourceConfig extends Component {
             queryListParams.searchConfig=searchConfig || "";
             switch(searchConfig) {
                 case "wait": 
-                    queryListParams.pageNum = waitConfigPageCondition.pageNum || 1;
+                    queryListParams.pageNum = 1;
                     queryListParams.pageSize = waitConfigPageCondition.pageSize || 10;
                     break;
                 case "configured": 
-                    queryListParams.pageNum = configuredPageCondition.pageNum || 1;
+                    queryListParams.pageNum = 1;
                     queryListParams.pageSize = configuredPageCondition.pageSize || 10;
                     break;
             }

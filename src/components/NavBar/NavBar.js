@@ -64,6 +64,16 @@ class NavBar extends PureComponent {
     });
   };
 
+  // 账户设置
+  userConfig = () => {
+    this.props.userConfig();
+  }
+
+  logout = () => {
+    // 退出请求
+    this.props.logout();
+  }
+
   render() {
     const { openSearchBox } = this.state;
     const {
@@ -142,7 +152,7 @@ class NavBar extends PureComponent {
               placement="bottomRight"
               title={`WELCOME ${user.userName}`}
               overlayClassName={cx('navbar-popup', { [theme]: !!theme })}
-              content={<UserDropDown />}
+              content={UserDropDown(this)}
               trigger="click"
             >
               <a className="dropdown-toggle">
@@ -161,36 +171,32 @@ class NavBar extends PureComponent {
   }
 }
 
-const UserDropDown = props => (
-  <ul className="dropdown-menu list-group dropdown-persist">
-    <li className="list-group-item">
-      <a className="animated animated-short fadeInUp">
-        <Icon type="mail" /> 信息
-        <Badge count={5} className="label" />
-      </a>
-    </li>
-    {/* <li className="list-group-item">
-      <a className="animated animated-short fadeInUp">
-        <Icon type="users" /> 好友
-        <Badge count={6} className="label" />
-      </a>
-    </li> */}
-    <li className="list-group-item">
-      <a className="animated animated-short fadeInUp">
-        <Icon type="gear" /> 帐户设置
-      </a>
-    </li>
-    <li className="list-group-item">
-      <a className="animated animated-short fadeInUp">
-        <Icon type="ring" /> 通知
-      </a>
-    </li>
-    <li className="list-group-item dropdown-footer">
-      <a href="">
-        <Icon type="poweroff" /> 退出
-      </a>
-    </li>
-  </ul>
-);
+const UserDropDown = _this => {
+  return (
+    <ul className="dropdown-menu list-group dropdown-persist">
+      {/* <li className="list-group-item">
+        <a className="animated animated-short fadeInUp">
+          <Icon type="mail" /> 信息
+          <Badge count={5} className="label" />
+        </a>
+      </li> */}
+      <li className="list-group-item">
+        <a className="animated animated-short fadeInUp" onClick={_this.userConfig.bind(_this)}>
+          <Icon type="gear" /> 帐户设置
+        </a>
+      </li>
+      {/* <li className="list-group-item">
+        <a className="animated animated-short fadeInUp">
+          <Icon type="ring" /> 通知
+        </a>
+      </li> */}
+      <li className="list-group-item dropdown-footer">
+        <a href="" onClick={_this.logout.bind(_this)}>
+          <Icon type="poweroff" /> 退出
+        </a>
+      </li>
+    </ul>
+  );
+}
 
 export default NavBar;
