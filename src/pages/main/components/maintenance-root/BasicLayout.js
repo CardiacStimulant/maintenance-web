@@ -341,7 +341,7 @@ export default class BasicLayout extends React.PureComponent {
             backdrop = "static"
             onHide={this.closeModal.bind(this)} >
             <Modal.Header closeButton>
-                <Modal.Title>{(userInfo.user ? userInfo.user.name || "" : "") + "账户设置"}</Modal.Title>
+                <Modal.Title>{(userInfo && userInfo.user ? (userInfo.user.name || "") : "") + "账户设置"}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <UserConfig closeModal={this.closeModal.bind(this)} userInfo={userInfo} />

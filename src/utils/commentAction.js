@@ -43,6 +43,9 @@ export const commentGetRequest = async(params, url, model, modelProperty, condit
         }
         model.updateState(object);
     }
+    if(!res) {
+        res = {};
+    }
     // 返回数据
     return res.data;
 }
