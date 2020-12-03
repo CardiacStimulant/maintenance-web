@@ -1,6 +1,7 @@
 import { actions } from "mirrorx";
 // 引入services，如不需要接口请求可不写
 import * as api from "./service";
+import * as HttpStateCode from 'components/HttpStateCode';
 import { Warning, Error, processData } from "utils";
 
 export default {
@@ -32,10 +33,10 @@ export default {
          */
         async queryPage(param, getState) {
             let res = processData(await api.queryPage(param));
-            if(res && res.code===200) {
+            if(res && res.code===HttpStateCode.OK) {
                 actions.OperationLog.updateState({
                     operationLogPageCondition: param || {},
-                    operationLogPageObject: res.result || {},
+                    operationLogPageObject: res.data || {},
                 });
             } else {
                 Error(res && res.message ? res.message : "请求失败");
