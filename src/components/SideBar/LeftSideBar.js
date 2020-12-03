@@ -190,7 +190,7 @@ class LeftSideBar extends PureComponent {
             <div className="userlogged clearfix">
               <Icon type="woman" />
               <div className="user-details">
-                <span>{user.name}</span>
+                <span>{user && user.user ? user.user.name : ""}</span>
                 <div className="dropdown">
                   <Select
                     size="small"
