@@ -3,10 +3,8 @@ import { actions } from "mirrorx";
 import * as api from "./service";
 // 接口返回数据公共处理方法，根据具体需要
 import { processData } from "utils";
-import * as constant from 'components/constant';
-import * as commentAction from "utils/commentAction";
+import * as HttpStateCode from 'components/HttpStateCode';
 import { Warning, Error } from "utils";
-import $ from "jquery";
 
 export default {
     // 确定 Store 中的数据模型作用域
@@ -36,7 +34,7 @@ export default {
          */
         async login(param, getState) {
             let res = processData(await api.login(param));
-            if(res && res.code===200) {
+            if(res && res.code===HttpStateCode.OK) {
                 return res;
             } else {
                 Error(res && res.message ? res.message : "请求失败");
