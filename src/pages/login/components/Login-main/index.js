@@ -6,6 +6,7 @@ import { Checkbox, } from 'antd';
 import logoImg from 'static/fe/static/assets/images/logo1.png';
 import { actions } from 'mirrorx';
 import { Success, Warning, Error } from "utils";
+import * as HttpStateCode from 'components/HttpStateCode';
 import './index.less';
 
 const FormItem = Form.FormItem;
@@ -26,7 +27,7 @@ class LoginMain extends Component {
       if (!err) {
         // 登录账号
         const loginResult = await actions.Login.login(values);
-        if(loginResult && loginResult.success) {
+        if(loginResult && loginResult.code===HttpStateCode.OK) {
           window.location.href=`${GLOBAL_COMPONENTS_URL}/fe/main#/`;
         } else {
           this.setState({

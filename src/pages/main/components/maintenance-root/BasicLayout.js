@@ -88,14 +88,14 @@ export default class BasicLayout extends React.PureComponent {
               systemMenus.children.push({
                 key: resource.key,
                 name: resource.name,
-                path: `${GLOBAL_COMPONENTS_URL}` + resource.url,
+                path: `${GLOBAL_COMPONENTS_URL}${GLOBAL_WEB_PERFIX}` + resource.url,
               });
             } else if(resource.owner===constant.RESOURCE_OWNER_MAINTENANCE) {
               // 运维管理菜单
               maintenanceMenus.children.push({
                 key: resource.key,
                 name: resource.name,
-                path: `${GLOBAL_COMPONENTS_URL}` + resource.url,
+                path: `${GLOBAL_COMPONENTS_URL}${GLOBAL_WEB_PERFIX}` + resource.url,
               });
             }
           }

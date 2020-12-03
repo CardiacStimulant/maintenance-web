@@ -32,7 +32,7 @@ export const commentGetRequest = async(params, url, model, modelProperty, condit
     if(model && modelProperty) {
         if(res && res.data) {
             // 设置结果对象
-            object[modelProperty] = res.data.result || res.data || defaultResult;
+            object[modelProperty] = res.data.data || res.data || defaultResult;
         } else {
             // 设置结果对象
             object[modelProperty] = res || defaultResult;
@@ -68,7 +68,7 @@ export const commentPostRequest = async(params, url, model, modelProperty) => {
     /* 设置model对象 */
     if(model && modelProperty && res.data) {
         // 设置结果对象
-        object[modelProperty] = res.data.result || res.data;
+        object[modelProperty] = res.data.data || res.data;
         model.updateState(object);
     }
     // 返回数据

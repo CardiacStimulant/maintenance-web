@@ -4,6 +4,7 @@ import {Row, Modal, Button, } from "tinper-bee";
 import ListTable from "components/ListTable";
 import {columns, searchCondition} from "./data/listTableData";
 import * as constant from 'components/constant';
+import * as HttpStateCode from 'components/HttpStateCode';
 import RoleManagerInformation from "../role-manager-information";
 import RoleResourceConfig from "../role_resource_config";
 import { Success, Warning, Error } from "utils";
@@ -143,7 +144,7 @@ class RoleManagerMain extends Component {
             deleteDisabled: true,
         });
         let res = await actions.RoleManager.deleteRole(role);
-        if(res && res.success) {
+        if(res && res.code===HttpStateCode.OK) {
             Success("删除成功");
             this.refreshList();
             this.closeModal();
@@ -170,7 +171,7 @@ class RoleManagerMain extends Component {
             deleteDisabled: true,
         });
         let res = await actions.RoleManager.batchDeleteRole(selectData);
-        if(res && res.success) {
+        if(res && res.code===HttpStateCode.OK) {
             Success("删除成功");
             this.closeModal();
             this.refreshList();

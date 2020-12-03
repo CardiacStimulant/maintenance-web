@@ -2,6 +2,7 @@ import { actions } from "mirrorx";
 // 引入services，如不需要接口请求可不写
 import * as api from "./service";
 import { Warning, Error, processData } from "utils";
+import * as HttpStateCode from 'components/HttpStateCode';
 import { reset } from "fetch-mock";
 
 export default {
@@ -33,10 +34,10 @@ export default {
          */
         async queryPage(param, getState) {
             let res = processData(await api.queryPage(param));
-            if(res.code===200) {
+            if(res.code===HttpStateCode.OK) {
                 actions.RoleManager.updateState({
                     roleManagerPageCondition: param || {},
-                    roleManagerPageObject: res.result || {},
+                    roleManagerPageObject: res.data || {},
                 });
             } else {
                 Error(res.message ? res.message : "数据返回异常");

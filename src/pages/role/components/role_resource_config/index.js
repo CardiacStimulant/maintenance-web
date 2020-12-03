@@ -3,6 +3,7 @@ import Form from 'bee-form';
 import {Row, Col, Loading, Icon, } from "tinper-bee";
 import ListTable from "components/ListTable";
 import * as commentAction from "utils/commentAction";
+import * as HttpStateCode from 'components/HttpStateCode';
 import {columns, searchCondition} from "./data/listTableData";
 import { actions } from 'mirrorx';
 import { Success, Warning, Error } from "utils";
@@ -150,14 +151,14 @@ class RoleResourceConfig extends Component {
                 this.setState({waitConfigListLoading: true,});
                 const waitConfigPageCondition = params;
                 const waitConfigPage = await commentAction.resource_queryConfigPage(params, actions.RoleManager, "", `${GROBAL_HTTP_CTX}`);
-                this.setState({waitSelectData: [], waitConfigListLoading: false, waitConfigPageCondition: waitConfigPageCondition, waitConfigPage: waitConfigPage.result,});
+                this.setState({waitSelectData: [], waitConfigListLoading: false, waitConfigPageCondition: waitConfigPageCondition, waitConfigPage: waitConfigPage.data,});
                 break;
             case "configured": 
                 this.setState({configuredListLoading: true,});
                 const configuredPageCondition = params;
                 const configuredPage = await commentAction.resource_queryConfigPage(params, actions.RoleManager, "", `${GROBAL_HTTP_CTX}`);
                 await actions.RoleManager.queryPage(params);
-                this.setState({configuredSelectData:[], configuredListLoading: false, configuredPageCondition: configuredPageCondition, configuredPage: configuredPage.result,});
+                this.setState({configuredSelectData:[], configuredListLoading: false, configuredPageCondition: configuredPageCondition, configuredPage: configuredPage.data,});
                 break;
         }
     }
@@ -172,7 +173,7 @@ class RoleResourceConfig extends Component {
         const addAllResult = await actions.RoleManager.addAllRoleResource({
             roleId: role.id || 0,
         });
-        if(addAllResult && addAllResult.success) {
+        if(addAllResult && addAllResult.code===HttpStateCode.OK) {
             // 刷新待配置资源数据和已配置资源数据
             let {waitConfigPageCondition, configuredPageCondition} = this.state;
             waitConfigPageCondition.pageNum = 1;
@@ -197,7 +198,7 @@ class RoleResourceConfig extends Component {
         const removeAllResult = await actions.RoleManager.removeAllRoleResource({
             roleId: role.id || 0,
         });
-        if(removeAllResult && removeAllResult.success) {
+        if(removeAllResult && removeAllResult.code===HttpStateCode.OK) {
             // 刷新待配置资源数据和已配置资源数据
             let {waitConfigPageCondition, configuredPageCondition} = this.state;
             waitConfigPageCondition.pageNum = 1;
@@ -229,7 +230,7 @@ class RoleResourceConfig extends Component {
             });
             // 角色添加资源
             const addResult = await actions.RoleManager.addRoleResources(addRoleResourceList);
-            if(addResult && addResult.success) {
+            if(addResult && addResult.code===HttpStateCode.OK) {
                 // 刷新待配置资源数据和已配置资源数据
                 let {waitConfigPageCondition, configuredPageCondition} = this.state;
                 waitConfigPageCondition.pageNum = 1;
@@ -264,7 +265,7 @@ class RoleResourceConfig extends Component {
             });
             // 角色移除资源
             const removeResult = await actions.RoleManager.removeRoleResources(removeRoleResourceList);
-            if(removeResult && removeResult.success) {
+            if(removeResult && removeResult.code===HttpStateCode.OK) {
                 // 刷新待配置资源数据和已配置资源数据
                 let {waitConfigPageCondition, configuredPageCondition} = this.state;
                 waitConfigPageCondition.pageNum = 1;

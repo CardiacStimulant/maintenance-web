@@ -65,6 +65,7 @@ const globalEnvConfig = new webpack.DefinePlugin({
   GROBAL_HTTP_CTX: JSON.stringify("/maintenance"),
   GLOBAL_COMPONENTS_URL: JSON.stringify("https://yytx.maintenance.com"),
   GLOBAL_LOGIN_URL: JSON.stringify("https://yytx.maintenance.com"),
+  GLOBAL_WEB_PERFIX: JSON.stringify("/fe/"),
 })
 
 //开发环境websocket_proxy_url

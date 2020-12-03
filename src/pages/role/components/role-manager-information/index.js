@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Form from 'bee-form';
 import {Row, Col, Label, FormControl, Button, Loading, } from "tinper-bee";
 import * as constant from 'components/constant';
+import * as HttpStateCode from 'components/HttpStateCode';
 import { actions } from 'mirrorx';
 import { Success, Warning, Error } from "utils";
 import $ from 'jquery';
@@ -40,7 +41,7 @@ class RoleManagerInformation extends Component {
                 } else {
                     res = await actions.RoleManager.addRole(values);
                 }
-                if(res && res.success) {
+                if(res && res.code===HttpStateCode.OK) {
                     Success("保存成功");
                     this.props.refreshList();
                     this.props.closeModal();
