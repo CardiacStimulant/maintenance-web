@@ -29,7 +29,6 @@ const { Content, Header } = Layout;
 export default class BasicLayout extends React.PureComponent {
   constructor(props) {
     super(props);
-    const user = $$.getStore('user', []);
     const theme = $$.getStore('theme', {
       leftSide: 'darkgrey', // 左边
       navbar: 'primary' // 顶部
@@ -48,7 +47,6 @@ export default class BasicLayout extends React.PureComponent {
       showSidebarHeader: false, // 左边栏头部开关
       collapsedRightSide: true, // 右边栏开关
       theme, // 皮肤设置
-      user,
       currentMenu: {},
       menu: [], // 菜单
       showUserConfigModal: false, // 是否显示账户设置modal
@@ -248,7 +246,6 @@ export default class BasicLayout extends React.PureComponent {
       showSidebarHeader,
       collapsedRightSide,
       theme,
-      user,
       currentMenu,
       menu,
       showUserConfigModal,
@@ -276,7 +273,7 @@ export default class BasicLayout extends React.PureComponent {
             theme={theme.navbar}
             logout={this.logout.bind(this)}
             userConfig={this.userConfig.bind(this)}
-            user={user}
+            user={userInfo}
           />
         </Header>
         <Layout>
@@ -291,7 +288,7 @@ export default class BasicLayout extends React.PureComponent {
             flatMenu={flatMenu}
             currentMenu={currentMenu}
             menu={menu}
-            user={user}
+            user={userInfo}
             addTabMenus = {this.addTabMenus.bind()}
           />
           <Content>

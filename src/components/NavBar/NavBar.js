@@ -149,7 +149,7 @@ class NavBar extends PureComponent {
           <li className="dropdown">
             <Popover
               placement="bottomRight"
-              title={`WELCOME ${user.userName}`}
+              title={`WELCOME ${user && user.user ? user.user.name : ""}`}
               overlayClassName={cx('navbar-popup', { [theme]: !!theme })}
               content={UserDropDown(this)}
               trigger="click"
@@ -157,7 +157,7 @@ class NavBar extends PureComponent {
               <a className="dropdown-toggle">
                 <Badge dot>
                   <Avatar src={require('../../static/fe/static/assets/images/avatar.jpg')}>
-                    {user.userName}
+                    {user && user.user ? user.user.name : ""}
                   </Avatar>
                 </Badge>
               </a>
