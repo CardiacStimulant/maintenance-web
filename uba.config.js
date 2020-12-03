@@ -70,15 +70,12 @@ const globalEnvConfig = new webpack.DefinePlugin({
 
 //开发环境websocket_proxy_url
 const dev_websocket_proxy_url_config = new webpack.DefinePlugin({
-  websocket_proxy_url: JSON.stringify("wss://yycti-daily.yyuap.com:7443"), //wss://pay.yonyoutelecom.cn:5443
 })
 //测试环境websocket_proxy_url
 const test_websocket_proxy_url_config = new webpack.DefinePlugin({
-  websocket_proxy_url: JSON.stringify("wss://testfs.yonyoutelecom.cn:7443"), //wss://isctest.yonyoutelecom.cn:7443
 })
 //demo演示环境websocket_proxy_url
 const demo_websocket_proxy_url_config = new webpack.DefinePlugin({
-  websocket_proxy_url: JSON.stringify("wss://iscdemo.yonyoutelecom.cn:7443")
 })
 
 const MINIMIZE_FLAG = (process.env.NODE_ENV == "production") ? true : false;
