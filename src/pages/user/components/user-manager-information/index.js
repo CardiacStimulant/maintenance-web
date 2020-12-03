@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Form from 'bee-form';
 import {Row, Col, Label, FormControl, Button, Loading, Select, } from "tinper-bee";
 import * as constant from 'components/constant';
+import * as HttpStateCode from 'components/HttpStateCode';
 import * as commentAction from "utils/commentAction";
 import './index.less'
 import { actions } from 'mirrorx';
@@ -25,7 +26,7 @@ class UserManagerInformation extends Component {
         // 查询角色信息
         const roleAllList = await commentAction.role_queryList({}, actions.UserManager, "", `${GROBAL_HTTP_CTX}`);
         this.setState({
-            roleAllList: roleAllList ? roleAllList.result || [] : [],
+            roleAllList: roleAllList ? roleAllList.data || [] : [],
             saveDisabled: false,
             saveShowLoading: false,
         });
@@ -59,7 +60,7 @@ class UserManagerInformation extends Component {
                 } else {
                     res = await actions.UserManager.addUserManager(values);
                 }
-                if(res && res.success) {
+                if(res && res.code===HttpStateCode.OK) {
                     Success("保存成功");
                     this.props.refreshList();
                     this.props.closeModal();

@@ -16,9 +16,9 @@ const { RangePicker } = DatePicker;
  */
 export function columns(_this){
     return ([{
-        title: "工号",
-        dataIndex: "jobNumber",
-        key: "jobNumber",
+        title: "登录账号",
+        dataIndex: "loginAccount",
+        key: "loginAccount",
         textAlign: "center",
         width: 150,
         render(text, record, index) {
@@ -30,13 +30,13 @@ export function columns(_this){
                 className="column-underline list-open" 
                 onClick={ _this.detailUser.bind(this, record, _this) }//绑定事件
                 >
-                {record.jobNumber}
+                {record.loginAccount}
             </a>)
         },
     }, {
-        title: "登录账号",
-        dataIndex: "loginAccount",
-        key: "loginAccount",
+        title: "工号",
+        dataIndex: "jobNumber",
+        key: "jobNumber",
         textAlign: "center",
         width: 150,
     }, {

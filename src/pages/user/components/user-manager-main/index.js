@@ -4,6 +4,7 @@ import {Row, Modal, Button, } from "tinper-bee";
 import ListTable from "components/ListTable";
 import {columns, searchCondition} from "./data/listTableData";
 import * as constant from 'components/constant';
+import * as HttpStateCode from 'components/HttpStateCode';
 import UserManagerInformation from "../user-manager-information";
 import { Success, Warning, Error } from "utils";
 import './index.less'
@@ -132,7 +133,7 @@ class UserManagerMain extends Component {
             deleteDisabled: true,
         });
         let res = await actions.UserManager.deleteUserManager(userManager);
-        if(res && res.success) {
+        if(res && res.code===HttpStateCode.OK) {
             Success("删除成功");
             this.closeModal();
             this.refreshList();
@@ -159,7 +160,7 @@ class UserManagerMain extends Component {
             deleteDisabled: true,
         });
         let res = await actions.UserManager.batchDeleteUserManager(selectData);
-        if(res && res.success) {
+        if(res && res.code===HttpStateCode.OK) {
             Success("删除成功");
             this.closeModal();
             this.refreshList();

@@ -1,6 +1,7 @@
 import { actions } from "mirrorx";
 // 引入services，如不需要接口请求可不写
 import * as api from "./service";
+import * as HttpStateCode from 'components/HttpStateCode';
 import { Warning, Error, processData, } from "utils";
 
 export default {
@@ -32,10 +33,10 @@ export default {
          */
         async queryPage(param, getState) {
             let res = processData(await api.queryPage(param));
-            if(res && res.code===200) {
+            if(res && res.code===HttpStateCode.OK) {
                 actions.UserManager.updateState({
                     userManagerPageCondition: param || {},
-                    userManagerPageObject: res.result || {},
+                    userManagerPageObject: res.data || {},
                 });
             } else {
                 Error(res && res.message ? res.message : "请求失败");
@@ -49,7 +50,7 @@ export default {
          */
         async addUserManager(param, getState) {
             let res = processData(await api.addUserManager(param));
-            if(res && res.code===200) {
+            if(res && res.code===HttpStateCode.OK) {
                 return res;
             } else {
                 Error(res && res.message ? res.message : "请求失败");
@@ -63,7 +64,7 @@ export default {
          */
         async updateUserManager(param, getState) {
             let res = processData(await api.updateUserManager(param));
-            if(res && res.code===200) {
+            if(res && res.code===HttpStateCode.OK) {
                 return res;
             } else {
                 Error(res && res.message ? res.message : "请求失败");
@@ -77,7 +78,7 @@ export default {
          */
         async deleteUserManager(param, getState) {
             let res = processData(await api.deleteUserManager(param));
-            if(res && res.code===200) {
+            if(res && res.code===HttpStateCode.OK) {
                 return res;
             } else {
                 Error(res && res.message ? res.message : "请求失败");
@@ -91,7 +92,7 @@ export default {
          */
         async batchDeleteUserManager(param, getState) {
             let res = processData(await api.batchDeleteUserManager(param));
-            if(res && res.code===200) {
+            if(res && res.code===HttpStateCode.OK) {
                 return res;
             } else {
                 Error(res && res.message ? res.message : "请求失败");
