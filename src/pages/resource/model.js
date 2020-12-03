@@ -1,6 +1,7 @@
 import { actions } from "mirrorx";
 // 引入services，如不需要接口请求可不写
 import * as api from "./service";
+import * as HttpStateCode from 'components/HttpStateCode';
 import { Warning, Error, processData } from "utils";
 
 export default {
@@ -32,10 +33,10 @@ export default {
          */
         async queryPage(param, getState) {
             let res = processData(await api.queryPage(param));
-            if(res && res.code===200) {
+            if(res && res.code===HttpStateCode.OK) {
                 actions.ResourceManager.updateState({
                     resourceManagerPageCondition: param || {},
-                    resourceManagerPageObject: res.result || {},
+                    resourceManagerPageObject: res.data || {},
                 });
             } else {
                 Error(res && res.message ? res.message : "请求失败");
@@ -49,7 +50,7 @@ export default {
          */
         async addResource(param, getState) {
             let res = processData(await api.addResource(param));
-            if(res && res.code===200) {
+            if(res && res.code===HttpStateCode.OK) {
                 return res;
             } else {
                 Error(res && res.message ? res.message : "请求失败");
@@ -63,7 +64,7 @@ export default {
          */
         async updateResource(param, getState) {
             let res = processData(await api.updateResource(param));
-            if(res && res.code===200) {
+            if(res && res.code===HttpStateCode.OK) {
                 return res;
             } else {
                 Error(res && res.message ? res.message : "请求失败");
@@ -77,7 +78,7 @@ export default {
          */
         async deleteResource(param, getState) {
             let res = processData(await api.deleteResource(param));
-            if(res && res.code===200) {
+            if(res && res.code===HttpStateCode.OK) {
                 return res;
             } else {
                 Error(res && res.message ? res.message : "请求失败");
@@ -91,7 +92,7 @@ export default {
          */
         async batchDeleteResource(param, getState) {
             let res = processData(await api.batchDeleteResource(param));
-            if(res && res.code===200) {
+            if(res && res.code===HttpStateCode.OK) {
                 return res;
             } else {
                 Error(res && res.message ? res.message : "请求失败");
